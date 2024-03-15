@@ -5,6 +5,24 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+        
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="mobile-web-app-capable" content="yes" />
+    <!-- Developer information -->
+    <meta name="Copyright" content="© 2023 City Government of Davao, Philippines" /><meta name="Publisher" content="City Government of Davao" /><meta name="Author" content="CTO" /><meta name="Designer" content="CITC" /><meta name="subject" content="Government" /><meta name="Language" content="English" /><meta name="distribution" content="Local" /><meta name="country" content="Philippines" />
+    <!-- Favicons -->
+    <link href="../Content/images/icon.png" rel="shortcut icon" type="image/png" /><link href="../Content/images/icon.png" rel="image_src" type="image/png" />
+    <!-- Stylesheets -->
+    <link href="../Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" /><link href="../Content/style.common.css?v=4" rel="stylesheet" />
+
+
+
+
+
+
+
         <title>eCedula</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
