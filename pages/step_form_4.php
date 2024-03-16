@@ -52,56 +52,50 @@
                 <div class="form first">
                     <div class="details personal">
                         <div class="details ID">
-                            <span class="title">Identity Details</span>
+                            <span class="title">Family Details</span>
 
                             <div class="fields">
                                 <div class="input-field">
-                                    <label>Valid ID</label>
-                                    <input type="file" placeholder="Enter ID Type " required>
+                                    <label>Father Name</label>
+                                    <input type="text" placeholder="Enter father name" required>
                                 </div>
 
                                 <div class="input-field">
-                                    <label>ID Number</label>
-                                    <input type="number" placeholder="Enter ID number" required>
+                                    <label>Mother Name</label>
+                                    <input type="text" placeholder="Enter mother name" required>
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Occupation</label>
-                                    <input type="text" placeholder="Enter Occupation" required>
+                                    <label>Guardian Name</label>
+                                    <input type="text" placeholder="Enter guardian name (optional)">
                                 </div>
 
                                 <div class="input-field">
-                                    <label>TIN Number</label>
-                                    <input type="text" placeholder="Enter TIN Number">
+                                    <label>Spouse Name</label>
+                                    <input type="text" placeholder="Enter spouse name">
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Place of Birth</label>
-                                    <input type="text" placeholder="Enter Place of Birth" required>
+                                    <label>Issued Date</label>
+                                    <input type="date" placeholder="Enter issued date" required>
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Gross Monthly Income (for employed)</label>
-                                    <input type="number" placeholder="Enter Monthly Income" required>
-                                    <select name="annual_income" id="annual_income">
-                                        <option value="income">5,000 - 10,000</option>
-                                        <option value="income">10,000 - 15,000</option>
-                                        <option value="income">15,000 - 20,000</option>
-                                        <option value="income">20,000 or more</option>
-                                    </select>
+                                    <label>Expiry Date</label>
+                                    <input type="date" placeholder="Enter expiry date" required>
                                 </div>
                             </div>
 
                             <div class="buttons">
-                                <a href="step_form_1.php">
+                                <a href="step_form_3.php">
                                     <div class="backBtn">
                                         <i class="bi bi-arrow-right-circle"></i>
                                         <span class="btnText">Back</span>
                                     </div>
                                 </a>
-                                <a href="step_form_3.php">
+                                <a href="step_form_4.php">
                                     <button class="nextBtn">
-                                        <span class="btnText">Next</span>
+                                        <span class="btnText">Fisnish</span>
                                         <i class="bi bi-arrow-right-circle"></i>
                                     </button>
                                 </a>
