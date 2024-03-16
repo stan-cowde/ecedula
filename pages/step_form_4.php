@@ -51,44 +51,43 @@
             <form action="#">
                 <div class="form first">
                     <div class="details personal">
-                        <!--step 3-->
-                        <div class="details address">
-                            <span class="title">Address Details</span>
+                        <div class="details ID">
+                            <span class="title">Family Details</span>
 
                             <div class="fields">
                                 <div class="input-field">
-                                    <label>Address</label>
-                                    <input type="text" placeholder="Enter your address" required>
+                                    <label>Father Name</label>
+                                    <input type="text" placeholder="Enter father name" required>
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Nationality</label>
-                                    <input type="text" placeholder="Enter Nationality " required>
+                                    <label>Mother Name</label>
+                                    <input type="text" placeholder="Enter mother name" required>
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Municipality</label>
-                                    <input type="text" placeholder="Enter Municipality" required>
+                                    <label>Guardian Name</label>
+                                    <input type="text" placeholder="Enter guardian name (optional)">
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Barangay</label>
-                                    <input type="text" placeholder="Enter your Barangay" required>
+                                    <label>Spouse Name</label>
+                                    <input type="text" placeholder="Enter spouse name">
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Block Number</label>
-                                    <input type="number" placeholder="Enter Block Number" required>
+                                    <label>Issued Date</label>
+                                    <input type="date" placeholder="Enter issued date" required>
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Street</label>
-                                    <input type="text" placeholder="Enter your Street" required>
+                                    <label>Expiry Date</label>
+                                    <input type="date" placeholder="Enter expiry date" required>
                                 </div>
                             </div>
 
                             <div class="buttons">
-                                <a href="step_form_2.php">
+                                <a href="step_form_3.php">
                                     <div class="backBtn">
                                         <i class="bi bi-arrow-right-circle"></i>
                                         <span class="btnText">Back</span>
@@ -96,12 +95,13 @@
                                 </a>
                                 <a href="step_form_4.php">
                                     <button class="nextBtn">
-                                        <span class="btnText">Next</span>
+                                        <span class="btnText">Fisnish</span>
                                         <i class="bi bi-arrow-right-circle"></i>
                                     </button>
                                 </a>
                             </div>
                         </div>
+                    </div>
             </form>
         </div>
 
