@@ -1,3 +1,32 @@
+<?php
+require_once('../config/config.php');
+
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["username"]) && !empty($_POST["password"])) {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION["username"] = $username;
+            header("Location: profile.php");
+            exit;
+        } else {
+            $message = "Invalid username or password";
+        }
+    } else {
+        $message = "Please enter username and password";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,14 +57,11 @@
 
     <!-- Template Main CSS File -->
     <link href="../assets/css/login.css" rel="stylesheet">
-
 </head>
 
 <body>
-
     <main>
         <div class="container">
-
             <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
@@ -53,15 +79,13 @@
                             <!-- End Logo -->
 
                             <div class="card mb-3">
-
                                 <div class="card-body">
-
                                     <div class="pt-4 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
                                         <p class="text-center small">Enter your username & password to login</p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" novalidate>
+                                    <form action="login.php" method="post" class="row g-3 needs-validation" novalidate>
 
                                         <div class="col-12">
                                             <label for="yourUsername" class="form-label">Username</label>
@@ -88,6 +112,11 @@
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Login</button> <!--butangan ug MATA nga icon-->
                                         </div>
+
+                                        <?php if (isset($message)) { ?>
+                                            <div class="alert alert-danger"><?php echo $message; ?></div>
+                                        <?php } ?>
+
                                         <div class="col-12">
                                             <p class="small mb-0">Don't have account? <a href="register.php">Create an account</a></p>
                                         </div>
@@ -95,15 +124,6 @@
 
                                 </div>
                             </div>
-
-                            <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                <!--Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>-->
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -127,7 +147,6 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
-
 </body>
 
 </html>

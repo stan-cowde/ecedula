@@ -1,6 +1,45 @@
 <?php
 require_once('../config/config.php');
+
+session_start();
+
+if (isset($_POST['create'])) {
+    $firstname            = $_POST['firstname'];
+    $lastname             = $_POST['lastname'];
+    $email                = $_POST['email'];
+    $username             = $_POST['username'];
+    $password             = $_POST['password'];
+    $confirmPassword      = $_POST['confirmPassword'];
+
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $checkUsernameStmt = $db->prepare("SELECT * FROM users WHERE username = ?");
+    $checkUsernameStmt->execute([$username]);
+    $existingUsername = $checkUsernameStmt->fetch();
+
+    $checkEmailStmt = $db->prepare("SELECT * FROM users WHERE email = ?");
+    $checkEmailStmt->execute([$email]);
+    $existingEmail = $checkEmailStmt->fetch();
+
+    if ($existingUsername) {
+        $message = 'Username already exists.';
+    } elseif ($existingEmail) {
+        $message = 'Email already exists.';
+    } else {
+        $sql = "INSERT INTO users (firstname, lastname, email, username, password ) VALUES(?,?,?,?,?)";
+        $stmtinsert = $db->prepare($sql);
+        $result = $stmtinsert->execute([$firstname, $lastname, $email, $username, $hashedPassword]);
+
+        if ($result) {
+            header("Location: login.php");
+            exit;
+        } else {
+            $message = 'There were errors while saving the data.';
+        }
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,40 +70,12 @@ require_once('../config/config.php');
 
     <!-- Template Main CSS File -->
     <link href="../assets/css/register.css" rel="stylesheet">
-
-
 </head>
 
 <body>
-    <div> <!--himoong 1. LAst Name, 2. Last name-->
-        <?php
-        if (isset($_POST['create'])) {
-            $firstname            = $_POST['firstname'];
-            $lastname            = $_POST['lastname'];
-            $email               = $_POST['email'];
-            $username            = $_POST['username'];
-            $password            = $_POST['password'];
-            $confirmPassword     = $_POST['confirmPassword'];
-
-
-            $sql = "INSERT INTO users (firstname, lastname, email, username, password, confirmPassword ) VALUES(?,?,?,?,?,?)";
-            $stmtinsert = $db->prepare($sql);
-            $result = $stmtinsert->execute([$firstname, $lastname, $email, $username, $password, $confirmPassword]);
-            if ($result) {
-                echo 'Successfully Saved.';
-            } else {
-                echo 'There were errors while saving the data.';
-            }
-            //echo $firstname . "" . $lastname . "" .$email . "" .$username . "" .$password . "" .$confirmPassword;
-
-        }
-        ?>
-
-    </div>
-
     <main>
         <div>
-            <form action="pages-register.php" method="post">
+            <form action="register.php" method="post">
                 <div class="container">
 
                     <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -73,7 +84,7 @@ require_once('../config/config.php');
                                 <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
                                     <div class="d-flex justify-content-center py-4">
-                                        <a href="index.html" class="logo d-flex align-items-center w-auto">
+                                        <a href="../index.php" class="logo d-flex align-items-center w-auto">
                                             <img src="assets/img/e.png" alt="">
                                             <span class="d-none d-lg-block">eCedula</span>
                                         </a>
@@ -146,6 +157,12 @@ require_once('../config/config.php');
                                                 <div class="col-12">
                                                     <button class="btn btn-primary w-100" type="submit" id="register" name="create">Create Account</button>
                                                 </div>
+
+
+                                                <?php if (isset($message)) { ?>
+                                                    <div class="alert alert-danger mt-3"><?php echo $message; ?></div>
+                                                <?php } ?>
+
                                                 <div class="col-12">
                                                     <p class="small mb-0 mt-3">Already have an account? <a href="login.php">Log in</a></p>
                                                 </div>
@@ -196,8 +213,6 @@ require_once('../config/config.php');
                 var username = $('#username').val();
                 var password = $('#password').val();
                 var confirmPassword = $('#confirmPassword').val();
-
-
             });
             swal.fire({
                 'title': 'Successfully Registered!',
@@ -209,7 +224,7 @@ require_once('../config/config.php');
     </script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 
 </body>
 
