@@ -5,48 +5,59 @@ session_start();
 $user_id = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $valid_id = $_POST['valid_id'];
-    $id_number = $_POST['id_number'];
-    $occupation = $_POST['occupation'];
-    $place_of_birth = $_POST['place_of_birth'];
-    $tin = $_POST['tin'];
-    $icr = $_POST['icr'];
-    $monthly_income = $_POST['monthly_income'];
+    $filename = $_FILES["uploadfile"]["name"];
+    $tempname = $_FILES["uploadfile"]["tmp_name"];
+    $folder = "./image/" . $filename;
 
-    $stmt = $db->prepare("SELECT user_id FROM identity_details WHERE user_id = :user_id");
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->execute();
-    $identity_details = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (move_uploaded_file($tempname, $folder)) {
+        $imagePath = $folder;
 
-    if ($identity_details) {
-        $stmt = $db->prepare("UPDATE identity_details SET
-                                    valid_id = :valid_id,
-                                    id_number = :id_number,
-                                    occupation = :occupation,
-                                    place_of_birth = :place_of_birth,
-                                    tin = :tin,
-                                    icr = :icr,
-                                    monthly_income = :monthly_income
-                                WHERE user_id = :user_id");
+        $valid_id = $imagePath;
+        $id_number = $_POST['id_number'];
+        $occupation = $_POST['occupation'];
+        $place_of_birth = $_POST['place_of_birth'];
+        $tin = $_POST['tin'];
+        $icr = $_POST['icr'];
+        $monthly_income = $_POST['monthly_income'];
+
+        $stmt = $db->prepare("SELECT user_id FROM identity_details WHERE user_id = :user_id");
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->execute();
+        $identity_details = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($identity_details) {
+            $stmt = $db->prepare("UPDATE identity_details SET
+                    valid_id = :valid_id,
+                    id_number = :id_number,
+                    occupation = :occupation,
+                    place_of_birth = :place_of_birth,
+                    tin = :tin,
+                    icr = :icr,
+                    monthly_income = :monthly_income
+                WHERE user_id = :user_id");
+        } else {
+            $stmt = $db->prepare("INSERT INTO identity_details 
+                                        (user_id, valid_id, id_number, occupation, place_of_birth, tin, icr, monthly_income) 
+                                    VALUES 
+                                        (:user_id, :valid_id, :id_number, :occupation, :place_of_birth, :tin, :icr, :monthly_income)");
+        }
+
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':valid_id', $valid_id);
+        $stmt->bindParam(':id_number', $id_number);
+        $stmt->bindParam(':occupation', $occupation);
+        $stmt->bindParam(':place_of_birth', $place_of_birth);
+        $stmt->bindParam(':tin', $tin);
+        $stmt->bindParam(':icr', $icr);
+        $stmt->bindParam(':monthly_income', $monthly_income);
+
+        $stmt->execute();
+
+        header("Location: step_form_3.php");
     } else {
-        $stmt = $db->prepare("INSERT INTO identity_details 
-                                    (user_id, valid_id, id_number, occupation, place_of_birth, tin, icr, monthly_income) 
-                                VALUES 
-                                    (:user_id, :valid_id, :id_number, :occupation, :place_of_birth, :tin, :icr, :monthly_income)");
+        header("Location: step_form_3.php");
+        echo "Failed to upload image.";
     }
-
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->bindParam(':valid_id', $valid_id);
-    $stmt->bindParam(':id_number', $id_number);
-    $stmt->bindParam(':occupation', $occupation);
-    $stmt->bindParam(':place_of_birth', $place_of_birth);
-    $stmt->bindParam(':tin', $tin);
-    $stmt->bindParam(':icr', $icr);
-    $stmt->bindParam(':monthly_income', $monthly_income);
-
-    $stmt->execute();
-
-    header("Location: step_form_3.php");
 } else {
     $stmt = $db->prepare("SELECT * FROM identity_details WHERE user_id = :user_id");
     $stmt->bindParam(':user_id', $user_id);
@@ -98,6 +109,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet">
 
+    <style>
+        .image-preview-container {
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: gainsboro;
+        }
+
+        #preview {
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <body>
@@ -115,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container">
             <header>Community Tax Certificate</header>
 
-            <form action="step_form_2.php" method="post">
+            <form action="step_form_2.php" method="post" enctype="multipart/form-data">
                 <div class="form first">
                     <div class="details personal">
                         <div class="details ID">
@@ -124,7 +150,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="fields">
                                 <div class="input-field">
                                     <label>Valid ID</label>
-                                    <input name="valid_id" type="file" placeholder="Enter ID Type" value="123">
+                                    <div class="image-preview-container">
+                                        <img id="preview" src="<?php echo $valid_id; ?>" class="image-preview">
+                                    </div>
+                                    <input name="uploadfile" type="file" accept="image/*" onchange="previewImage(event)">
+
                                 </div>
 
                                 <div class="input-field">
@@ -208,6 +238,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
+
+    <script type="text/javascript">
+        function previewImage(event) {
+            var input = event.target;
+            var image = document.getElementById('preview');
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                image.src = ''; // Clear the preview if no file selected
+            }
+        }
+    </script>
 </body>
 
 </html>
