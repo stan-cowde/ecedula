@@ -64,6 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $identity_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $valid_id = "";
+    $id_number = "";
+    $occupation = "";
+    $place_of_birth = "";
+    $tin = "";
+    $icr = "";
+    $monthly_income = "";
+
     if ($identity_details) {
         $valid_id = $identity_details['valid_id'];
         $id_number = $identity_details['id_number'];

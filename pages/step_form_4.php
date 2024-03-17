@@ -50,6 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $family_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $father_name = "";
+    $mother_name = "";
+    $guardian_name = "";
+    $spouse_name = "";
+    $issued_date = "";
+    $expiry_date = "";
+
     if ($family_details) {
         $father_name = $family_details['father_name'];
         $mother_name = $family_details['mother_name'];

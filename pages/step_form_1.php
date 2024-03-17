@@ -59,6 +59,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $personal_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $first_name = "";
+    $last_name = "";
+    $middle_name = "";
+    $citizenship = "";
+    $date_of_birth = "";
+    $gender = "";
+    $weight = "";
+    $height = "";
+    $civil_status = "";
+
     if ($personal_details) {
         $first_name = $personal_details['first_name'];
         $last_name = $personal_details['last_name'];
