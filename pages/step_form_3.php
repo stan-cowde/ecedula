@@ -1,3 +1,66 @@
+<?php
+require_once('../config/config.php');
+
+session_start();
+$user_id = $_SESSION['user_id'];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $address = $_POST['address'];
+    $nationality = $_POST['nationality'];
+    $municipality = $_POST['municipality'];
+    $barangay = $_POST['barangay'];
+    $block_number = $_POST['block_number'];
+    $street = $_POST['street'];
+
+    $stmt = $db->prepare("SELECT user_id FROM address_details WHERE user_id = :user_id");
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $address_details = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($address_details) {
+        $stmt = $db->prepare("UPDATE address_details SET
+                                    address = :address,
+                                    nationality = :nationality,
+                                    municipality = :municipality,
+                                    barangay = :barangay,
+                                    block_number = :block_number,
+                                    street = :street
+                                WHERE user_id = :user_id");
+    } else {
+        $stmt = $db->prepare("INSERT INTO address_details 
+                                    (user_id, address, nationality, municipality, barangay, block_number, street) 
+                                VALUES 
+                                    (:user_id, :address, :nationality, :municipality, :barangay, :block_number, :street)");
+    }
+
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':address', $address);
+    $stmt->bindParam(':nationality', $nationality);
+    $stmt->bindParam(':municipality', $municipality);
+    $stmt->bindParam(':barangay', $barangay);
+    $stmt->bindParam(':block_number', $block_number);
+    $stmt->bindParam(':street', $street);
+
+    $stmt->execute();
+
+    header("Location: step_form_4.php");
+} else {
+    $stmt = $db->prepare("SELECT * FROM address_details WHERE user_id = :user_id");
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $address_details = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($address_details) {
+        $address = $address_details['address'];
+        $nationality = $address_details['nationality'];
+        $municipality = $address_details['municipality'];
+        $barangay = $address_details['barangay'];
+        $block_number = $address_details['block_number'];
+        $street = $address_details['street'];
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +111,7 @@
         <div class="container">
             <header>Community Tax Certificate</header>
 
-            <form action="#">
+            <form action="step_form_3.php" method="post">
                 <div class="form first">
                     <div class="details personal">
                         <!--step 3-->
@@ -58,32 +121,32 @@
                             <div class="fields">
                                 <div class="input-field">
                                     <label>Address</label>
-                                    <input type="text" placeholder="Enter your address" required>
+                                    <input type="text" placeholder="Enter your address" name="address" value="<?php echo $address; ?>" required>
                                 </div>
 
                                 <div class="input-field">
                                     <label>Nationality</label>
-                                    <input type="text" placeholder="Enter Nationality " required>
+                                    <input type="text" placeholder="Enter Nationality" name="nationality" value="<?php echo $nationality; ?>" required>
                                 </div>
 
                                 <div class="input-field">
                                     <label>Municipality</label>
-                                    <input type="text" placeholder="Enter Municipality" required>
+                                    <input type="text" placeholder="Enter Municipality" name="municipality" value="<?php echo $municipality; ?>" required>
                                 </div>
 
                                 <div class="input-field">
                                     <label>Barangay</label>
-                                    <input type="text" placeholder="Enter your Barangay" required>
+                                    <input type="text" placeholder="Enter your Barangay" name="barangay" value="<?php echo $barangay; ?>" required>
                                 </div>
 
                                 <div class="input-field">
                                     <label>Block Number</label>
-                                    <input type="number" placeholder="Enter Block Number" required>
+                                    <input type="number" placeholder="Enter Block Number" name="block_number" value="<?php echo $block_number; ?>" required>
                                 </div>
 
                                 <div class="input-field">
                                     <label>Street</label>
-                                    <input type="text" placeholder="Enter your Street" required>
+                                    <input type="text" placeholder="Enter your Street" name="street" value="<?php echo $street; ?>" required>
                                 </div>
                             </div>
 
@@ -94,12 +157,10 @@
                                         <span class="btnText">Back</span>
                                     </div>
                                 </a>
-                                <a href="step_form_4.php">
-                                    <button class="nextBtn">
-                                        <span class="btnText">Next</span>
-                                        <i class="bi bi-arrow-right-circle"></i>
-                                    </button>
-                                </a>
+                                <button type="submit" class="nextBtn">
+                                    <span class="btnText">Next</span>
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </button>
                             </div>
                         </div>
             </form>
