@@ -298,6 +298,8 @@
       }, false)
     })
 
+    
+
   /**
    * Initiate Datatables
    */

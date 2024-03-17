@@ -65,7 +65,7 @@ require_once('../config/config.php');
 
         <section class="section profile">
             <div class="row">
-                <a href="step_form_1.php">create payment</a>
+                <a href="payment.php">Create Payment</a>
                 <div class="col-xl-4">
 
                     <div class="card">
