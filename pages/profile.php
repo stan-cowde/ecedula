@@ -72,9 +72,9 @@ session_start();
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                            <img src="../assets/img/profile1.png" alt="Profile" class="rounded-circle">
+                            <img src="../assets/img/prof-icon.png" alt="Profile" class="rounded-circle">
                             <h2><?= isset($_SESSION["username"]) ? $_SESSION["username"] : "no username"; ?></h2>
-                            <h3>Teacher</h3>
+                            <h3></h3>
                             <div class="social-links mt-2">
                                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -113,8 +113,8 @@ session_start();
                             <div class="tab-content pt-2">
 
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">About</h5>
-                                    <p class="small fst-italic">PORDA CAPSTONEEEE</p>
+                                    <h5 class="card-title"></h5>
+                                    <p class="small fst-italic"> </p>
 
                                     <h5 class="card-title">Profile Details</h5>
 
@@ -125,12 +125,12 @@ session_start();
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Company</div>
-                                        <div class="col-lg-9 col-md-8">UMDC</div>
+                                        <div class="col-lg-9 col-md-8"></div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Job</div>
-                                        <div class="col-lg-9 col-md-8">Teacher</div>
+                                        <div class="col-lg-9 col-md-8" placeholder= "eg. teacher"></div>
                                     </div>
 
                                     <div class="row">
@@ -140,7 +140,7 @@ session_start();
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Address</div>
-                                        <div class="col-lg-9 col-md-8">Brgy. Di maklaro, Di pud makita Street,Unseen City</div>
+                                        <div class="col-lg-9 col-md-8"></div>
                                     </div>
 
                                     <div class="row">
@@ -150,7 +150,7 @@ session_start();
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">s.tagalog@example.com</div>
+                                        <div class="col-lg-9 col-md-8"></div>
                                     </div>
 
                                 </div>
@@ -162,7 +162,7 @@ session_start();
                                         <div class="row mb-3">
                                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <img src="../assets/img/profile1.png" alt="Profile">
+                                                <img src="../assets/img/prof-icon.png" alt="Profile">
                                                 <div class="pt-2">
                                                     <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
                                                     <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -173,42 +173,42 @@ session_start();
                                         <div class="row mb-3">
                                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="fullName" type="text" class="form-control" id="fullName" value="Stanley Tagalog">
+                                                <input name="fullName" type="text" class="form-control" id="fullName" >
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <textarea name="about" class="form-control" id="about" style="height: 100px">Wala lang hehe</textarea>
+                                                <textarea name="about" class="form-control" id="about" style="height: 100px"></textarea>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="company" type="text" class="form-control" id="company" value="Um Digos College">
+                                                <input name="company" type="text" class="form-control" id="company" placeholder="Company name" >
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="job" type="text" class="form-control" id="Job" value="Teacher">
+                                                <input name="job" type="text" class="form-control" id="Job" placeholder="Enter Job">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="country" type="text" class="form-control" id="Country" value="Philipines">
+                                                <input name="country" type="text" class="form-control" id="Country" placeholder="Enter Country">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="address" type="text" class="form-control" id="Address" value="Roxas Extension2">
+                                                <input name="address" type="text" class="form-control" id="Address" placeholder="Enter Address">
                                             </div>
                                         </div>
 
@@ -222,35 +222,35 @@ session_start();
                                         <div class="row mb-3">
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email" class="form-control" id="Email" value="estanleyjt@gmail.com">
+                                                <input name="email" type="email" class="form-control" id="Email" placeholder="Enter email">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                                                <input name="twitter" type="text" class="form-control" id="Twitter" value="">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                                                <input name="facebook" type="text" class="form-control" id="Facebook" value="">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
+                                                <input name="instagram" type="text" class="form-control" id="Instagram" value="">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                                                <input name="linkedin" type="text" class="form-control" id="Linkedin" value="">
                                             </div>
                                         </div>
 

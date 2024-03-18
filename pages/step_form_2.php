@@ -64,6 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $identity_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $valid_id = "";
+    $id_number = "";
+    $occupation = "";
+    $place_of_birth = "";
+    $tin = "";
+    $icr = "";
+    $monthly_income = "";
+
     if ($identity_details) {
         $valid_id = $identity_details['valid_id'];
         $id_number = $identity_details['id_number'];
@@ -179,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <div class="input-field">
                                     <label>ICR NO. (if an alien)</label>
-                                    <input name="icr" type="text" placeholder="Enter ICR" value="<?php echo $icr; ?>" required>
+                                    <input name="icr" type="text" placeholder="Enter ICR" value="<?php echo $icr; ?>" >
                                 </div>
 
                                 <div class="input-field">

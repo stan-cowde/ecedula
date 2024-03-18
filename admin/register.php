@@ -77,8 +77,8 @@ include('includes/navbar.php');
      
           <tr>
             <td> 1 </td>
-            <td> Funda of WEb IT</td>
-            <td> funda@example.com</td>
+            <td> peter</td>
+            <td> peter@gmail.com</td>
             <td> *** </td>
             <td>
                 <form action="" method="post">

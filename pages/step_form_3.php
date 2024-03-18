@@ -50,6 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $address_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $address = "";
+    $nationality = "";
+    $municipality = "";
+    $barangay = "";
+    $block_number = "";
+    $street = "";
+
     if ($address_details) {
         $address = $address_details['address'];
         $nationality = $address_details['nationality'];
@@ -125,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Nationality</label>
+                                    <label>Citizenship</label>
                                     <input type="text" placeholder="Enter Nationality" name="nationality" value="<?php echo $nationality; ?>" required>
                                 </div>
 

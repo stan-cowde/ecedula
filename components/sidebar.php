@@ -41,7 +41,7 @@
             </a>
             <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="forms-elements.html" class="active">
+                    <a href="step_form_1.php" class="active">
                         <i class="bi bi-circle"></i><span>Online Cedula Application</span>
                     </a>
                 </li>
@@ -72,18 +72,18 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="users-profile.html">
+            <a class="nav-link collapsed" href="profile.php">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
-        <li class="nav-item">
+<!--        <li class="nav-item">
             <a class="nav-link collapsed" href="pages-faq.html">
                 <i class="bi bi-question-circle"></i>
                 <span>F.A.Q</span>
             </a>
-        </li><!-- End F.A.Q Page Nav -->
+-->        </li><!-- End F.A.Q Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="pages-contact.html">

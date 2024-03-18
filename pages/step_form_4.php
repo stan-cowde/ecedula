@@ -50,6 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $family_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $father_name = "";
+    $mother_name = "";
+    $guardian_name = "";
+    $spouse_name = "";
+    $issued_date = "";
+    $expiry_date = "";
+
     if ($family_details) {
         $father_name = $family_details['father_name'];
         $mother_name = $family_details['mother_name'];
@@ -157,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <span class="btnText">Back</span>
                                     </div>
                                 </a>
-                                <a href="step_form_4.php">
+                                <a href="payment.php.php">
                                     <button class="nextBtn">
                                         <span class="btnText">Next</span>
                                         <i class="bi bi-arrow-right-circle"></i>

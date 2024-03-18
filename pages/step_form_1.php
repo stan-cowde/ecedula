@@ -59,6 +59,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $personal_details = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $first_name = "";
+    $last_name = "";
+    $middle_name = "";
+    $citizenship = "";
+    $date_of_birth = "";
+    $gender = "";
+    $weight = "";
+    $height = "";
+    $civil_status = "";
+
     if ($personal_details) {
         $first_name = $personal_details['first_name'];
         $last_name = $personal_details['last_name'];
@@ -85,8 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="../assets/img/e.png" rel="icon">
-    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="ecedula/assets/img/e.png" rel="icon">
+    <link href="ecedula/assets/img/e.png" rel="apple-touch-icon">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
@@ -154,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
 
                             <div class="input-field">
-                                <label>Citizenship</label>
+                                <label>Nationality</label>
                                 <input name="citizenship" type="text" placeholder="Enter your Citizenship" value="<?php echo $citizenship; ?>" required>
                             </div>
 
