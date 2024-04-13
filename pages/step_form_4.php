@@ -170,6 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <i class="bi bi-arrow-right-circle"></i>
                                     </button>
                                 </a>
+                                <li><a class="getstarted scrollto" href="pages-login.html">Login</a></li>
                             </div>
                         </div>
                     </div>
