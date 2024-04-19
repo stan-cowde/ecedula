@@ -1,6 +1,27 @@
 <?php
-include('includes/header.php'); 
-include('includes/navbar.php'); 
+require_once('../config/config.php');
+
+session_start();
+
+include('includes/header.php');
+include('includes/navbar.php');
+
+
+$records_per_page = 10;
+
+$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+$offset = ($current_page - 1) * $records_per_page;
+
+$stmt = $db->prepare("SELECT * FROM users LIMIT :offset, :limit");
+$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+$stmt->bindParam(':limit', $records_per_page, PDO::PARAM_INT);
+$stmt->execute();
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$total_records = $db->query("SELECT COUNT(*) FROM users")->fetchColumn();
+
+$total_pages = ceil($total_records / $records_per_page);
 ?>
 
 
@@ -10,8 +31,7 @@ include('includes/navbar.php');
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
   </div>
 
   <div class="card-body">
@@ -21,59 +41,68 @@ include('includes/navbar.php');
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th> ID </th>
-            <th> Username </th>
-            <th>Email </th>
-            <th>Password</th>
-            <th>STATUS </th>
-            <th> </th>
+            <th>ID</th>
+            <th>name</th>
+            <th>username</th>
+            <th>Email</th>
+            <th colspan="2">Status</th>
           </tr>
         </thead>
-        <tbody>
-     
+        <?php foreach ($rows as $row) : ?>
           <tr>
-            <td> 1 </td>
-            <td> peter</td>
-            <td> peter@gmail.com</td>
-            <td> *** </td>
+            <td><?php echo $row['id']; ?></td>
+            <td><?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?></td>
+            <td><?php echo $row['username']; ?></td>
+            <td><?php echo $row['email']; ?></td>
             <td>
-                <form action="" method="post">
-                    <input type="hidden" name="edit_id" value="">
-                    <button  type="submit" name="edit_btn" class="btn btn-success"> Approved</button>
-                </form>
+              <form action="" method="post">
+                <input type="hidden" name="edit_id" value="<?php echo $row['id']; ?>">
+                <button type="submit" name="edit_btn" class="btn btn-success">Approved</button>
+              </form>
             </td>
             <td>
-                <form action="" method="post">
-                  <input type="hidden" name="delete_id" value="">
-                  <button type="submit" name="delete_btn" class="btn btn-danger"> Disapproved</button>
-                </form>
+              <form action="" method="post">
+                <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
+                <button type="submit" name="delete_btn" class="btn btn-danger">Disapproved</button>
+              </form>
             </td>
           </tr>
-        
-        </tbody>
+        <?php endforeach; ?>
       </table>
+
+      <div class="d-flex justify-content-center mt-4">
+        <nav>
+          <ul class="pagination">
+            <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+              <li class="page-item <?php echo $current_page === $i ? 'active' : ''; ?>">
+                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+              </li>
+            <?php endfor; ?>
+          </ul>
+        </nav>
+      </div>
 
     </div>
 
   </div>
-  
-
-    <!-- Earnings (Monthly) Card Example -->
- 
-    <!-- Pending Requests Card Example -->
-  
-  </div>
-
-  <!-- Content Row -->
 
 
+  <!-- Earnings (Monthly) Card Example -->
+
+  <!-- Pending Requests Card Example -->
+
+</div>
+
+<!-- Content Row -->
 
 
 
 
 
 
-  <?php
+
+
+<?php
 include('includes/scripts.php');
 include('includes/footer.php');
 ?>

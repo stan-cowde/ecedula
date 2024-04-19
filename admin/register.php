@@ -87,10 +87,10 @@ include "includes/header.php";
         </div>
       </div>
 
-  
-
-</div>
 
 
-<?php include "includes/scripts.php";
-?>
+    </div>
+
+
+    <?php include "includes/scripts.php";
+    ?>
