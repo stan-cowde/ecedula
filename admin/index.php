@@ -25,8 +25,8 @@ include('includes/navbar.php');
             <th> Username </th>
             <th>Email </th>
             <th>Password</th>
-            <th>EDIT </th>
-            <th>DELETE </th>
+            <th>STATUS </th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
