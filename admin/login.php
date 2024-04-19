@@ -1,9 +1,10 @@
 <?php
 require_once('../config/config.php');
 
+session_start();
+
 include('includes/header.php');
 
-session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST["email"]) && isset($_POST["password"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
@@ -18,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($user && password_verify($password, $user['password'])) {
       $_SESSION["user_id"] = $user['id'];
       $_SESSION["username"] = $email;
-      header("Location: profile.php");
+      header("Location: index.php");
       exit;
     } else {
       $message = "Invalid email or password";
