@@ -6,6 +6,19 @@ session_start();
 include('includes/header.php');
 include('includes/navbar.php');
 
+if (isset($_POST['edit_btn'])) {
+  $id = $_POST['edit_id'];
+  $stmt = $db->prepare("UPDATE users SET verified = 1 WHERE id = :id");
+  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+}
+
+if (isset($_POST['delete_btn'])) {
+  $id = $_POST['delete_id'];
+  $stmt = $db->prepare("UPDATE users SET verified = 0 WHERE id = :id");
+  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+}
 
 $records_per_page = 10;
 
@@ -13,22 +26,18 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 $offset = ($current_page - 1) * $records_per_page;
 
-$stmt = $db->prepare("SELECT * FROM users LIMIT :offset, :limit");
+$stmt = $db->prepare("SELECT * FROM users WHERE verified IS NULL LIMIT :offset, :limit");
 $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 $stmt->bindParam(':limit', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$total_records = $db->query("SELECT COUNT(*) FROM users")->fetchColumn();
+$total_records = $db->query("SELECT COUNT(*) FROM users WHERE verified IS NULL")->fetchColumn();
 
 $total_pages = ceil($total_records / $records_per_page);
 ?>
 
-
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-  <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
@@ -37,6 +46,8 @@ $total_pages = ceil($total_records / $records_per_page);
   <div class="card-body">
 
     <div class="table-responsive">
+
+      <h4>Unverified Users</h4>
 
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
@@ -51,7 +62,11 @@ $total_pages = ceil($total_records / $records_per_page);
         <?php foreach ($rows as $row) : ?>
           <tr>
             <td><?php echo $row['id']; ?></td>
-            <td><?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?></td>
+            <td>
+              <a href="user-details.php?id=<?php echo $row['id']; ?>">
+                <?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?>
+              </a>
+            </td>
             <td><?php echo $row['username']; ?></td>
             <td><?php echo $row['email']; ?></td>
             <td>
@@ -83,24 +98,8 @@ $total_pages = ceil($total_records / $records_per_page);
       </div>
 
     </div>
-
   </div>
-
-
-  <!-- Earnings (Monthly) Card Example -->
-
-  <!-- Pending Requests Card Example -->
-
 </div>
-
-<!-- Content Row -->
-
-
-
-
-
-
-
 
 <?php
 include('includes/scripts.php');
