@@ -48,7 +48,7 @@ include('includes/header.php');
                     <input type="password" name="passwordd" class="form-control form-control-user" placeholder="Password">
                     </div>
             
-                    <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block"> register </button>
+                    <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block" href="ecedula/admin/register.php"> register </button>
                     <hr>
                 </form>
 

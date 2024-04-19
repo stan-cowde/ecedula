@@ -345,7 +345,7 @@
 
           <form action="logout.php" method="POST"> 
           
-            <button type="submit" name="logout_btn" class="btn btn-primary">Logout</button>
+            <button type="submit" name="logout_btn" class="btn btn-primary" href="login.php" >Logout</button>
 
           </form>
 

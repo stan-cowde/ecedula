@@ -69,8 +69,8 @@ include('includes/navbar.php');
             <th> Username </th>
             <th>Email </th>
             <th>Password</th>
-            <th>EDIT </th>
-            <th>DELETE </th>
+            <th>Status </th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
@@ -80,6 +80,25 @@ include('includes/navbar.php');
             <td> peter</td>
             <td> peter@gmail.com</td>
             <td> *** </td>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="edit_id" value="">
+                    <button  type="submit" name="edit_btn" class="btn btn-success"> Approved</button>
+                </form>
+            </td>
+            <td>
+                <form action="" method="post">
+                  <input type="hidden" name="delete_id" value="">
+                  <button type="submit" name="delete_btn" class="btn btn-danger"> Disapproved</button>
+                </form>
+            </td>
+          </tr>
+
+          <tr>
+            <td> 2 </td>
+            <td> stan</td>
+            <td> tan@gmail.com</td>
+            <td> ***** </td>
             <td>
                 <form action="" method="post">
                     <input type="hidden" name="edit_id" value="">
