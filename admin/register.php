@@ -81,8 +81,6 @@ include "includes/header.php";
                   <div class="alert alert-danger small"><?php echo $message; ?></div>
                 <?php } ?>
 
-
-
               </div>
             </div>
           </div>
