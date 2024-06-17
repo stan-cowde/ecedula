@@ -40,8 +40,8 @@ $total_pages = ceil($total_records / $records_per_page);
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>name</th>
-                        <th>username</th>
+                        <th>Name</th>
+                        <th>Username</th>
                         <th>Email</th>
                     </tr>
                 </thead>

@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Mother Name</label>¡`
+                                    <label>Mother Name</label>
                                     <input name="mother_name" type="text" placeholder="Enter mother name" value="<?php echo $mother_name; ?>" required>
                                 </div>
 
@@ -170,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <i class="bi bi-arrow-right-circle"></i>
                                     </button>
                                 </a>
-                                <li><a class="getstarted scrollto" href="pages-login.html">Login</a></li>
+                                <li><a class="getstarted scrollto" href="pages-login.html"></a></li>
                             </div>
                         </div>
                     </div>
