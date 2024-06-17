@@ -57,7 +57,7 @@
                     <li><a class="nav-link scrollto" href="#team">Team</a></li>
 
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                    <li><a class="getstarted scrollto" href="../login-user.php">Login</a></li>
+                    <li><a class="getstarted scrollto" href="pages/login-user.php">Login</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -75,7 +75,7 @@
                     <h2 data-aos="fade-up" data-aos-delay="400">Begin Your Journey: Create an Account to Get Started!</h2>
                     <div data-aos="fade-up" data-aos-delay="600">
                         <div class="text-center text-lg-start">
-                            <a href="pages/register.php" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                            <a href="pages/register-user.php" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
                                 <span>Sign up</span>
                                 <i class="bi bi-arrow-right"></i>
                             </a>
