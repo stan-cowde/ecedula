@@ -164,13 +164,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <span class="btnText">Back</span>
                                     </div>
                                 </a>
-                                <a href="payment.php.php">
+                                <a href="payment.php">
                                     <button class="nextBtn">
                                         <span class="btnText">Next</span>
                                         <i class="bi bi-arrow-right-circle"></i>
                                     </button>
                                 </a>
-                                <li><a class="getstarted scrollto" href="pages-login.html"></a></li>
                             </div>
                         </div>
                     </div>
