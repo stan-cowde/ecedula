@@ -1,1 +1,3 @@
-kailangan ba og cURL gamiton ang paymongo API?
+1 - kailangan ba og cURL gamiton ang paymongo API?
+
+2 -ask about paymongoPaymentIntent.php
