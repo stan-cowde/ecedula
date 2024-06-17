@@ -52,8 +52,17 @@
     <span>Admin Profile</span></a>
 </li>
 
+<li class="nav-item">
+  <a class="nav-link" href="approved-users.php">
+    <i class=" "></i>
+    <span>Approved </span></a>
+</li>
 
-
+<li class="nav-item">
+  <a class="nav-link" href="disapproved-users.php">
+    <i class=" "></i>
+    <span>Disapproved </span></a>
+</li>
 
 
 <!-- Nav Item - Utilities Collapse Menu -->

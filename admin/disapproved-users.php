@@ -21,6 +21,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $total_records = $db->query("SELECT COUNT(*) FROM users WHERE verified = 0")->fetchColumn();
 
 $total_pages = ceil($total_records / $records_per_page);
+
 ?>
 
 <div class="container-fluid">

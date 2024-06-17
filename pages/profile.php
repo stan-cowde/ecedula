@@ -66,7 +66,7 @@ session_start();
 
         <section class="section profile">
             <div class="row">
-                <a href="step_form_1.php">Create Payment</a>
+                <a href="step_form_1.php" class="btn-create-payment">Create Payment</a>
                 <div class="col-xl-4">
 
                     <div class="card">

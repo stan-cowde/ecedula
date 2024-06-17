@@ -69,7 +69,7 @@ if (isset($_POST['create'])) {
     <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="ecedula/assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -164,7 +164,7 @@ if (isset($_POST['create'])) {
                                                 <?php } ?>
 
                                                 <div class="col-12">
-                                                    <p class="small mb-0 mt-3">Already have an account? <a href="login.php">Log in</a></p>
+                                                    <p class="small mb-0 mt-3">Already have an account? <a href="login-user.php">Log in</a></p>
                                                 </div>
                                             </form>
 
@@ -197,7 +197,8 @@ if (isset($_POST['create'])) {
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+    
+ <!--   <script>
         type = "text/javascript"
         $(function() {
             $('#register').click(function() {
@@ -221,7 +222,7 @@ if (isset($_POST['create'])) {
             })
 
         });
-    </script>
+    -->   </script>
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>

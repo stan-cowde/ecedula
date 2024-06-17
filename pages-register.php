@@ -179,33 +179,6 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>type="text/javascript"
-    $(function(){
-      $('#register').click(function(){    
-
-        var valid = this.form.checkValidity();
-        if(valid){
-          alert
-        }
-       
-        var firstname         = $('#firstanme').val();
-        var lastname          = $('#lastname').val();
-        var email             = $('#email').val();
-        var username          = $('#username').val();
-        var password          = $('#password').val();
-        var confirmPassword   = $('#confirmPassword').val();   
-        
-      
-      });
-      swal.fire({
-          'title': 'Successfully Registered!',
-          'text': '',
-          'icon': 'success'
-          })
- 
-    });
-
-  </script>
   
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
