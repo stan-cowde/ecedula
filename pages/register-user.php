@@ -31,7 +31,7 @@ if (isset($_POST['create'])) {
         $result = $stmtinsert->execute([$firstname, $lastname, $email, $username, $hashedPassword]);
 
         if ($result) {
-            header("Location: login.php");
+            header("Location: login-user.php");
             exit;
         } else {
             $message = 'There were errors while saving the data.';
@@ -75,7 +75,7 @@ if (isset($_POST['create'])) {
 <body>
     <main>
         <div>
-            <form action="register.php" method="post">
+            <form action="register-user.php" method="post">
                 <div class="container">
 
                     <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
