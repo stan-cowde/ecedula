@@ -1,3 +1,12 @@
 1 - kailangan ba og cURL gamiton ang paymongo API?
 
 2 -ask about paymongoPaymentIntent.php
+
+
+
+
+//tubag ni benz
+- Need og Curl si paymongo since magkuha rata sa API response niya og mag labay ta og request payload sa paymongo
+-Dili ta pwede mag gamit og get_file_contents kay if mag hosting, banned na siya na function sa php
+
+

@@ -16,10 +16,8 @@ $data = [
         'attributes' => [
             'amount' => 10000,
             'payment_method_allowed' => [
-                'card',
-                'dob',
+                'gcash',
                 'paymaya',
-                'billease',
             ],
             'payment_method_options' => [
                 'card' => [
