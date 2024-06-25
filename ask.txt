@@ -7,6 +7,9 @@
 
 //tubag ni benz
 - Need og Curl si paymongo since magkuha rata sa API response niya og mag labay ta og request payload sa paymongo
--Dili ta pwede mag gamit og get_file_contents kay if mag hosting, banned na siya na function sa php
+- Dili ta pwede mag gamit og get_file_contents kay if mag hosting, banned na siya na function sa php
+- Tama ang step, una mag create ta og paymongoPaymentIntent tapos ibutang nato as e-wallet then mag hulat tas response
+
+
 
 

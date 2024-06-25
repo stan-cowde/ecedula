@@ -8,7 +8,7 @@
  * 
  */
 
- //test key ni benz
+ //test key ni benz or pwede ibutang inyong sekret key diri
 $api_key = 'sk_test_pg5oqsNATMue2mZCFQvtDcMY'; 
 
 $headers = [
@@ -21,8 +21,18 @@ $headers = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount']))) 
 {
-    //centavos conversion 
-    $amount = intval($_POST['amount']) * 100;
+    //calculate with additional fee
+    $amount = floatval($_POST['amount']);
+    $paymongo_fee = 2.5;
+    $totalAmount = $amount + ($amount * ($paymongo_fee / 100));
+
+
+    //centavos conversion for final amount
+    $finalAmount = intval($totalAmount * 100);
+
+
+    //transaction ID
+    $transactionID = generateTransactionID();
                 
 
     //create checkout
@@ -36,15 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount'])))
             CURLOPT_POSTFIELDS => json_encode([
                 'data' => [
                     'attributes' => [
-                            'send_email_receipt' => false,
+                            'send_email_receipt' => true,
                             'show_description' => true,
                             'show_line_items' => true,
-                            'success_url' => 'http://localhost/ecedula/testSuccess.php',
-                            'cancel_url' => 'http://localhost/ecedula/cancel.php',
+                            'success_url' => "http://localhost/ecedula/testSuccess.php?amount={$finalAmount}&transactionID={$transactionID}",
+                            'cancel_url' => 'http://localhost/ecedula/testcancel.php',
                             'line_items' => [
                                     [
                                         'currency' => 'PHP',
-                                        'amount' => $amount,
+                                        'amount' => $finalAmount,
                                         'name' => 'cedula',
                                         'quantity' => 1
                                     ]
@@ -95,3 +105,8 @@ else {
 }
 
 
+
+function generateTransactionID()
+{
+    return uniqid();
+}

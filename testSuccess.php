@@ -10,9 +10,9 @@
     <p>Thank you for your payment. Your transaction has been completed successfully.</p>
     <h3>Receipt</h3>
     <div>
-        <p>Transaction ID: 1234567890</p>
+        <p>Transaction ID: <?php echo htmlspecialchars($_GET['transactionID']); ?></p>
         <p>Transaction Name: Joanna Olarte</p>
-        <p>Transaction Amount: 100.00</p>
+        <p>Transaction Amount: <?php echo htmlspecialchars($_GET['amount']) / 100; ?></p>
     </div>
 </body>
 </html>
