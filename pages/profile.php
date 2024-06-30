@@ -66,7 +66,17 @@ session_start();
 
         <section class="section profile">
             <div class="row">
-                <a href="step_form_1.php" class="btn-create-payment">Create Payment</a>
+                
+            
+                <?php
+                       if ($_SESSION["verified"] === 0) {
+                            echo '<div class="alert alert-warning" role="alert">Your account has not been verified yet. Please comply your documents to verify.</div>';
+                        }else if($_SESSION["verified"] === 1){
+                            echo '<a href="step_form_1.php" class="btn-create-payment">Create Payment</a>';
+                        }else{
+                            echo header('Location: ../index.php');
+                        }
+                ?>
                 <div class="col-xl-4">
 
                     <div class="card">

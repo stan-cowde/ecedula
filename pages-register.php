@@ -46,7 +46,7 @@
     $confirmPassword     = $_POST['confirmPassword'];
 
 
-    $sql = "INSERT INTO users (firstname, lastname, email, username, password, confirmPassword ) VALUES(?,?,?,?,?,?)";
+    $sql = "INSERT INTO users (firstname, lastname, email, username, password, confirmPassword) VALUES(?,?,?,?,?,?)";
     $stmtinsert = $db->prepare($sql);
     $result = $stmtinsert->execute([ $firstname, $lastname, $email, $username, $password, $confirmPassword]);
     if($result){

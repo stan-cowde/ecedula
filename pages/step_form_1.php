@@ -179,8 +179,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
 
                             <div class="input-field">
-                                <label>Height</label>
-                                <input name="height" type="text" placeholder="Enter your height" value="<?php echo $height; ?>" required>
+                                <label>Height (CM)</label>
+                                <input name="height" type="text" placeholder="Enter your height (In Cm)" value="<?php echo $height; ?>" required>
                             </div>
 
                             <div class="input-field">

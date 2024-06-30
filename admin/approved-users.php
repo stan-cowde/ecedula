@@ -48,7 +48,7 @@ $total_pages = ceil($total_records / $records_per_page);
                     <tr>
                         <td><?php echo $row['id']; ?></td>
                         <td>
-                            <a href="user-details.php?id=<?php echo $row['id']; ?>">
+                            <a href="" id="user-link" data-toggle="modal" data-target=".bd-example-modal-sm" data-id="<?php echo $row['id']; ?>">
                                 <?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?>
                             </a>
                         </td>
@@ -74,7 +74,76 @@ $total_pages = ceil($total_records / $records_per_page);
     </div>
 </div>
 
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">User Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- User details will be displayed here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+      
+
+
 <?php
 include('includes/scripts.php');
 include('includes/footer.php');
 ?>
+
+<script>
+    document.querySelectorAll('#user-link').forEach(link => {
+        link.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const userId = event.target.getAttribute('data-id');
+
+            //console.log(userId);
+
+            try {
+                const response = await fetch('config/Users/fetch_users_byID.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: userId })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                //console.log(data);
+
+                
+                const modalBody = document.getElementById('modalBody');
+                modalBody.innerHTML = `
+                    <p><strong>ID:</strong> ${data.id}</p>
+                    <p><strong>Name:</strong> ${data.firstname} ${data.lastname}</p>
+                    <p><strong>Username:</strong> ${data.username}</p>
+                    <p><strong>Email:</strong> ${data.email}</p>
+                `;
+
+                
+                $('.bd-example-modal-sm').modal('show');
+
+                
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        });
+    });
+</script>
+

@@ -18,7 +18,6 @@ $headers = [
 ];
 
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount']))) 
 {
     //calculate with additional fee
@@ -38,40 +37,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount'])))
     //create checkout
             $ch = curl_init('https://api.paymongo.com/v1/checkout_sessions');
             curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => json_encode([
-                'data' => [
-                    'attributes' => [
-                            'send_email_receipt' => true,
-                            'show_description' => true,
-                            'show_line_items' => true,
-                            'success_url' => "http://localhost/ecedula/testSuccess.php?amount={$finalAmount}&transactionID={$transactionID}",
-                            'cancel_url' => 'http://localhost/ecedula/testcancel.php',
-                            'line_items' => [
-                                    [
-                                        'currency' => 'PHP',
-                                        'amount' => $finalAmount,
-                                        'name' => 'cedula',
-                                        'quantity' => 1
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => json_encode([
+                        'data' => [
+                            'attributes' => [
+                                    'send_email_receipt' => true,
+                                    'show_description' => true,
+                                    'show_line_items' => true,
+                                    'success_url' => "http://localhost/ecedula/testSuccess.php?amount={$finalAmount}&transactionID={$transactionID}",
+                                    'cancel_url' => 'http://localhost/ecedula/testcancel.php',
+                                    'line_items' => [
+                                            [
+                                                'currency' => 'PHP',
+                                                'amount' => $finalAmount,
+                                                'name' => 'cedula',
+                                                'quantity' => 1
+                                            ]
+                                    ],
+                                    'description' => 'Joana olarte company',
+                                    'payment_method_types' => [
+                                                    'gcash',
+                                                    'paymaya'
                                     ]
-                            ],
-                            'description' => 'Joana olarte company',
-                            'payment_method_types' => [
-                                            'gcash',
-                                            'paymaya'
                             ]
-                    ]
-                ]
-            ]),
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json",
-                "accept: application/json",
-                "authorization: Basic ". base64_encode($api_key)
-            ],
+                        ]
+                    ]),
+                    CURLOPT_HTTPHEADER => [
+                        "Content-Type: application/json",
+                        "accept: application/json",
+                        "authorization: Basic ". base64_encode($api_key)
+                    ],
             ]);
 
             $joana = curl_exec($ch);

@@ -3,25 +3,7 @@ require_once('../config/config.php');
 
 session_start();
 
-
-
-$records_per_page = 10;
-
-$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-$offset = ($current_page - 1) * $records_per_page;
-
-$stmt = $db->prepare("SELECT * FROM users LIMIT :offset, :limit");
-$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-$stmt->bindParam(':limit', $records_per_page, PDO::PARAM_INT);
-$stmt->execute();
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$total_records = $db->query("SELECT COUNT(*) FROM users")->fetchColumn();
-
-$total_pages = ceil($total_records / $records_per_page);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,115 +35,62 @@ $total_pages = ceil($total_records / $records_per_page);
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet">
 
-
-    
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
-<aside id="sidebar" class="sidebar">
+<body>
+    <!-- ======= Header ======= -->
+    <?php include('../components/header.php') ?>
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+    <!-- ======= Sidebar ======= -->
+    <?php include("../components/sidebar.php") ?>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="dashboard.php">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="step_form_1.php" class="active">
-                        <i class="bi bi-circle"></i><span>Online Cedula Application</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+    <main id="main" class="main">
 
-        <li class="nav-heading">Pages</li>
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="profile.php">
-                <i class="bi bi-person"></i>
-                <span>Profile</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
-                <i class="bi bi-envelope"></i>
-                <span>Contact</span>
-            </a>
-        </li><!-- End Contact Page Nav -->
+        <section class="section profile">
+            
+        </section>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-register.html">
-                <i class="bi bi-card-list"></i>
-                <span>Register</span>
-            </a>
-        </li>
+    </main><!-- End #main -->
 
-    </ul>
-</aside>
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; <strong><span></span></strong>All Rights Reserved 2023
+        </div>
 
-<header id="header" class="header fixed-top d-flex align-items-center">
+    </footer><!-- End Footer -->
 
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="../assets/img/e.png" alt="">
-            <span class="d-none d-lg-block">eCedula</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div>
-</header>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-<div class="container-fluid">
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="../assets/vendor/echarts/echarts.min.js"></script>
+    <script src="../assets/vendor/quill/quill.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-  </div>
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
 
-<!-- Table-->
-  <div class="card-body">
+</body>
 
-    <div class="table-responsive">
-
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>name</th>
-            <th>username</th>
-            <th>Email</th>
-            <th colspan="2">Status</th>
-          </tr>
-        </thead>
-        <?php foreach ($rows as $row) : ?>
-          <tr>
-            <td><?php echo $row['id']; ?></td>
-            <td><?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?></td>
-            <td><?php echo $row['username']; ?></td>
-            <td><?php echo $row['email']; ?></td>
-            <td>
-              <form action="" method="post">
-                <input type="hidden" name="edit_id" value="<?php echo $row['id']; ?>">
-                <button type="submit" name="edit_btn" class="btn btn-success">Approved</button>
-              </form>
-            </td>
-            <td>
-              <form action="" method="post">
-                <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
-                <button type="submit" name="delete_btn" class="btn btn-danger">Disapproved</button>
-              </form>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </table> 
-
-    </div>
-
-  </div>  
-
+</html>

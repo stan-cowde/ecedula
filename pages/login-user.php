@@ -1,6 +1,7 @@
 <?php
 require_once('../config/config.php');
 
+
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,10 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
+            
             $_SESSION["user_id"] = $user['id'];
             $_SESSION["username"] = $username;
+            $_SESSION["verified"] = $user['verified'];
             header("Location: profile.php");
             exit;
+
+
         } else {
             $message = "Invalid username or password";
         }
