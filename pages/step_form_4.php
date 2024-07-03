@@ -176,9 +176,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
         </div>
 
-        <script src="../assets/js/script.js"></script>
 
     </main><!-- End #main -->
+
+    <script src="../assets/js/script.js"></script>
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">

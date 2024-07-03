@@ -1,3 +1,12 @@
+<?php 
+
+if (empty($_SESSION['username'])){
+    header('Location: ../index.php');
+    exit;
+}
+
+?>
+
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">

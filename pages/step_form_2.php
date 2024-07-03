@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id_number = $_POST['id_number'];
         $occupation = $_POST['occupation'];
         $place_of_birth = $_POST['place_of_birth'];
-        $tin = $_POST['tin'];
-        $icr = $_POST['icr'];
+        $tin = intval($_POST['tin']);
+        $icr = intval($_POST['icr']);
         $monthly_income = $_POST['monthly_income'];
 
         $stmt = $db->prepare("SELECT user_id FROM identity_details WHERE user_id = :user_id");
