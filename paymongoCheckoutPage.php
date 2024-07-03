@@ -8,6 +8,18 @@
  * 
  */
 
+session_start();
+require_once 'config/config.php';
+
+$id = $_SESSION['user_id'];
+
+$query = $db->prepare("SELECT * FROM users WHERE id = :user_id");
+$query->execute(['user_id' => $_SESSION['user_id']]);
+$users = $query->fetchAll(PDO::FETCH_ASSOC);
+$name = $users[0]['firstname'] . ' ' . $users[0]['lastname'];
+$email = $users[0]['email'];
+
+
  //test key ni benz or pwede ibutang inyong sekret key diri
 $api_key = 'sk_test_pg5oqsNATMue2mZCFQvtDcMY'; 
 
@@ -45,11 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount'])))
                     CURLOPT_POSTFIELDS => json_encode([
                         'data' => [
                             'attributes' => [
+                                    "email" => $email,
+                                    "name" => $name,
                                     'send_email_receipt' => true,
                                     'show_description' => true,
                                     'show_line_items' => true,
                                     'success_url' => "http://localhost/ecedula/testSuccess.php?amount={$finalAmount}&transactionID={$transactionID}",
-                                    'cancel_url' => 'http://localhost/ecedula/testcancel.php',
+                                    'cancel_url' => 'http://localhost/ecedula/pages/payment.php',
                                     'line_items' => [
                                             [
                                                 'currency' => 'PHP',
@@ -62,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount'])))
                                     'payment_method_types' => [
                                                     'gcash',
                                                     'paymaya'
-                                    ]
+                                    ],
                             ]
                         ]
                     ]),

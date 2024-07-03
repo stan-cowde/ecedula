@@ -49,28 +49,29 @@ require_once('../config/config.php');
 
     <!-- ======= Sidebar ======= -->
         <?php include("../components/sidebar.php") ?>
-        
-        <div class="container">
-  <form>
-    <div class="input-group">
-      <label for="name">Name on Card</label>
-      <input type="text" id="name" name="name" placeholder="John Doe" required>
-    </div>
-    <div class="input-group">
-      <label for="card-number">Card Number</label>
-      <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9101 1121" required>
-    </div>
-    <div class="input-group">
-      <label for="expiry">Expiration Date</label>
-      <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
-    </div>
-    <div class="input-group">
-      <label for="cvv">CVV</label>
-      <input type="text" id="cvv" name="cvv" placeholder="123" required>
-    </div>
-    <button type="submit">Pay Now</button>
-  </form>
-</div>
+       
+
+        <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Cedula Payment</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section profile">
+          <form action="../paymongoCheckoutPage.php" method="POST">
+                  <label for="amount">Amount to Pay (PHP):</label>
+                  <input type="number" id="amount" name="amount" required>
+                  <input type="hidden" name="_csrf_token" value="<?= $token; ?>">
+                  <button type="submit" class="btn btn-primary">Pay Now</button>
+              </form>
+        </section>
+
+    </main><!-- End #main -->
 
 
 <script src="../assets/js/script.js"></script>

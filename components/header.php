@@ -5,6 +5,11 @@ if (empty($_SESSION['username'])){
     exit;
 }
 
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+echo $token = $_SESSION['token'];
+
 ?>
 
 <header id="header" class="header fixed-top d-flex align-items-center">
