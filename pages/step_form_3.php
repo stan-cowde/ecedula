@@ -155,9 +155,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <label>Street</label>
                                     <input type="text" placeholder="Enter your Street" name="street" value="<?php echo $street; ?>" required>
                                 </div>
-                            </div>
 
-                            <div class="buttons">
+                                <div class="buttons column-gap-3" style="justify-content: space-between;">
                                 <a href="step_form_2.php">
                                     <div class="backBtn">
                                         <i class="bi bi-arrow-right-circle"></i>
@@ -169,6 +168,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <i class="bi bi-arrow-right-circle"></i>
                                 </button>
                             </div>
+                            </div>
+
+                            
                         </div>
             </form>
         </div>

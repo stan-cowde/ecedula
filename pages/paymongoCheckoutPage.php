@@ -118,7 +118,6 @@ else {
 }
 
 
-
 function generateTransactionID()
 {
     return uniqid();

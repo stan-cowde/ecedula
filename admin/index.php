@@ -8,14 +8,23 @@ include('includes/navbar.php');
 
 if (isset($_POST['edit_btn'])) {
   $id = $_POST['edit_id'];
-  $stmt = $db->prepare("UPDATE users SET verified = 1 WHERE id = :id");
+  $stmt = $db->prepare("UPDATE users u
+                        JOIN application_request ar ON u.id = ar.user_id
+                        SET u.verified = 1,
+                            ar.status = 'Approved'
+                        WHERE ar.status = 'Pending' AND ar.id = :id");
   $stmt->bindParam(':id', $id, PDO::PARAM_INT);
   $stmt->execute();
 }
 
 if (isset($_POST['delete_btn'])) {
   $id = $_POST['delete_id'];
-  $stmt = $db->prepare("UPDATE users SET verified = 0 WHERE id = :id");
+  $stmt = $db->prepare("UPDATE users u
+                        JOIN application_request ar ON u.id = ar.user_id
+                        SET u.verified = 0,
+                            ar.status = 'Denied',
+                            ar.reviewed_by = " . $_SESSION['user_id'] . "
+                        WHERE ar.status = 'Pending' AND ar.id = :id");
   $stmt->bindParam(':id', $id, PDO::PARAM_INT);
   $stmt->execute();
 }
@@ -26,7 +35,20 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 $offset = ($current_page - 1) * $records_per_page;
 
-$stmt = $db->prepare("SELECT * FROM users WHERE verified IS NULL LIMIT :offset, :limit");
+$stmt = $db->prepare("SELECT 
+                        ar.id AS id,
+                            ar.status,
+                            ar.reviewed_by,
+                            ar.created_at AS application_created_at,
+                            ar.updated_at AS application_updated_at,
+                            u.firstname,
+                            u.lastname,
+                            u.email,
+                            u.username
+                        FROM 
+                            application_request ar
+                        JOIN 
+                            users u ON ar.user_id = u.id WHERE status = 'Pending' AND u.verified = 0 LIMIT :offset, :limit");
 $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 $stmt->bindParam(':limit', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();

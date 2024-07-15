@@ -40,26 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(':spouse_name', $spouse_name);
     $stmt->bindParam(':issued_date', $issued_date);
     $stmt->bindParam(':expiry_date', $expiry_date);
+
     $stmt->execute();
 
-
-    $stmt = $db->prepare("SELECT * FROM application_request WHERE user_id = :user_id");
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->execute();
-    $application_request = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (! $application_request) {
-            $stmt = $db->prepare("INSERT INTO application_request 
-                                    (user_id, created_at, updated_at) 
-                            VALUES 
-                                    (:user_id2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);");
-        
-        $stmt->bindParam(':user_id2', $user_id);
-        $stmt->execute();
-    }
-
-
-    header("Location: verification_request.php");
+    header("Location: step_form_4.php");
 } else {
     $stmt = $db->prepare("SELECT * FROM family_details WHERE user_id = :user_id");
     $stmt->bindParam(':user_id', $user_id);
@@ -117,6 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/ending.css">
 
 </head>
 
@@ -132,66 +117,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!--Form Element--><!--main/pagetitle-->
 
     <main id="maintwo" class="maintwo">
-        <div class="container">
-            <header>Community Tax Certificate</header>
-
-            <form action="step_form_4.php" method="post">
-                <div class="form first">
-                    <div class="details personal">
-                        <div class="details ID">
-                            <span class="title">Family Details</span>
-
-                            <div class="fields">
-                                <div class="input-field">
-                                    <label>Father Name</label>
-                                    <input name="father_name" type="text" placeholder="Enter father name" value="<?php echo $father_name; ?>" required>
-                                </div>
-
-                                <div class="input-field">
-                                    <label>Mother Name</label>
-                                    <input name="mother_name" type="text" placeholder="Enter mother name" value="<?php echo $mother_name; ?>" required>
-                                </div>
-
-                                <div class="input-field">
-                                    <label>Guardian Name</label>
-                                    <input name="guardian_name" type="text" placeholder="Enter guardian name (optional)" value="<?php echo $guardian_name; ?>">
-                                </div>
-
-                                <div class="input-field">
-                                    <label>Spouse Name</label>
-                                    <input name="spouse_name" type="text" placeholder="Enter spouse name" value="<?php echo $spouse_name; ?>">
-                                </div>
-
-                                <div class="input-field">
-                                    <label>Issued Date</label>
-                                    <input name="issued_date" type="date" placeholder="Enter issued date" value="<?php echo $issued_date; ?>" required>
-                                </div>
-
-                                <div class="input-field">
-                                    <label>Expiry Date</label>
-                                    <input name="expiry_date" type="date" placeholder="Enter expiry date" value="<?php echo $expiry_date; ?>" required>
-                                </div>
-                            </div>
-
-                            <div class="buttons column-gap-3" style="justify-content: space-between;">
-                                <a href="step_form_3.php">
-                                    <div class="backBtn">
-                                        <i class="bi bi-arrow-right-circle"></i>
-                                        <span class="btnText">Back</span>
-                                    </div>
-                                </a>
-                                <a href="verification_request.php">
-                                    <button class="nextBtn">
-                                        <span class="btnText">Next</span>
-                                        <i class="bi bi-arrow-right-circle"></i>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-            </form>
-        </div>
-
+       
+    <div class="grid-container">
+        <img src="../assets/img/positive-vote.png" id="thumbs-up">
+        <h1>Verification on process !</h1>
+            <p class="quote">
+            "Hold on a sec! We're verifying your details. This might take a moment, like convincing a cat to take a bath. 🐱🚿"
+            </p>
+    </div>
 
     </main><!-- End #main -->
 

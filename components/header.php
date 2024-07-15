@@ -8,14 +8,45 @@ if (empty($_SESSION['username'])){
 if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
-echo $token = $_SESSION['token'];
+$token = $_SESSION['token'];
 
 ?>
 
-<header id="header" class="header fixed-top d-flex align-items-center">
+<style>
+        .warning {
+            background-color: #ffc107;
+            color: #856404;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1050; /* Ensure it is above other elements */
+        }
+        body {
+            padding-top: 70px; /* Adjust this value based on the height of your fixed header and warning */
+        }
+    </style>
+
+
+<?php if ($_SESSION["verified"] === 0) : ?>
+
+<div class="warning alert alert-warning text-align-center fw-bold">
+    Warning: Your account is not verified yet. Please <a href="step_form_1.php">verify.</a> your account to access all features.
+</div>
+
+<header id="header" class="header fixed-top d-flex align-items-center mt-5">
+
+<?php else : ?>
+
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+<?php endif; ?>
+
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="dashboard.php" class="logo d-flex align-items-center">
             <img src="../assets/img/e.png" alt="">
             <span class="d-none d-lg-block">eCedula</span>
         </a>
@@ -97,58 +128,6 @@ echo $token = $_SESSION['token'];
 
             </li><!-- End Notification Nav -->
 
-            <li class="nav-item dropdown">
-
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                    <i class="bi bi-chat-left-text"></i>
-                    <span class="badge bg-success badge-number">2</span>
-                </a><!-- End Messages Icon -->
-
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                    <li class="dropdown-header">
-                        You have 2 new messages
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
-                        <a href="#">
-                            <!-- <img src="../assets/img/messages-1.jpg" alt="" class="rounded-circle"> -->
-                            <div>
-                                <h4>Aldvin Alcasid</h4>
-                                <p>Tol!</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
-                        <a href="#">
-                            <!-- <img src="../assets/img/messages-2.jpg" alt="" class="rounded-circle"> -->
-                            <div>
-                                <h4>Alex Bontuyan</h4>
-                                <p>Aha ka? </p>
-                                <p>6 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="dropdown-footer">
-                        <a href="#">Show all messages</a>
-                    </li>
-
-                </ul><!-- End Messages Dropdown Items -->
-
-            </li><!-- End Messages Nav -->
-
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="../assets/img/profile1.png" alt="Profile" class="rounded-circle">
@@ -195,7 +174,7 @@ echo $token = $_SESSION['token'];
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="landing-page.html">
+                        <a class="dropdown-item d-flex align-items-center" href="../config/logout.php">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Sign Out</span>
                         </a>

@@ -120,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
+
     <!-- ======= Header ======= -->
     <?php include('../components/header.php') ?>
 
@@ -156,11 +157,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             <div class="input-field">
                                 <label>Gender</label>
-                                <select required name="gender" id="gender">
-                                    <option value="" disabled hidden>Choose a gender</option>
-                                    <option value="male" <?php if ($gender === 'male') echo 'selected'; ?>>Male</option>
-                                    <option value="female" <?php if ($gender === 'female') echo 'selected'; ?>>Female</option>
-                                </select>
+                                    <select required name="gender" id="gender" class="form-select form-select-lg mb-3">
+                                        <option value="" disabled selected>Choose a gender</option>
+                                        <option value="male" <?php if ($gender === 'male') echo 'selected'; ?>>Male</option>
+                                        <option value="female" <?php if ($gender === 'female') echo 'selected'; ?>>Female</option>
+                                        <option value="other" <?php if ($gender === 'other') echo 'selected'; ?>>Other</option>
+                                    </select>
                             </div>
 
                             <div class="input-field">
@@ -180,12 +182,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             <div class="input-field">
                                 <label>Height (CM)</label>
-                                <input name="height" type="text" placeholder="Enter your height (In Cm)" value="<?php echo $height; ?>" required>
+                                <input name="height" type="number" placeholder="Enter your height (In Cm)" value="<?php echo $height; ?>" required>
                             </div>
 
                             <div class="input-field">
                                 <label>Weight</label>
-                                <input name="weight" type="text" placeholder="Enter your weight" value="<?php echo $weight; ?>" required>
+                                <input name="weight" type="number" placeholder="Enter your weight" value="<?php echo $weight; ?>" required>
                             </div>
                         </div>
 

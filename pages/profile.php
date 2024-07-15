@@ -60,6 +60,7 @@ session_start();
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                     <li class="breadcrumb-item">Users</li>
                     <li class="breadcrumb-item active">Profile</li>
+                    
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -70,7 +71,7 @@ session_start();
             
                 <?php
                        if ($_SESSION["verified"] === 0) {
-                            echo '<div class="alert alert-warning" role="alert">Your account has not been verified yet. Please comply your documents to verify.</div>';
+                            echo '<div class="alert alert-warning" role="alert">Your account has not been verified yet. Please comply your documents to <a href="step_form_1.php">verify.</a></div>';
                         }else if($_SESSION["verified"] === 1){
                             echo '<a href="step_form_1.php" class="btn-create-payment">Create Payment</a>';
                         }else{

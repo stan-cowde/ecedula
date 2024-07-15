@@ -187,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <div class="input-field">
                                     <label>ICR NO. (if an alien)</label>
-                                    <input name="icr" type="text" placeholder="Enter ICR" value="<?php echo $icr; ?>" >
+                                    <input name="icr" type="number" placeholder="Enter ICR" value="<?php echo $icr; ?>" >
                                 </div>
 
                                 <div class="input-field">
@@ -199,9 +199,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <option value="high" <?php if ($monthly_income === 'high') echo 'selected'; ?>>20,000 or more</option>
                                     </select>
                                 </div>
-                            </div>
 
-                            <div class="buttons">
+                                <div class="buttons column-gap-3" style="justify-content: space-between;">
                                 <a href="step_form_1.php">
                                     <div class="backBtn">
                                         <i class="bi bi-arrow-right-circle"></i>
@@ -212,6 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <span class="btnText">Next</span>
                                     <i class="bi bi-arrow-right-circle"></i>
                                 </button>
+                            </div>
                             </div>
                         </div>
                     </div>

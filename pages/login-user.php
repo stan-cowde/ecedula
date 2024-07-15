@@ -16,11 +16,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && password_verify($password, $user['password'])) {
             
-            $_SESSION["user_id"] = $user['id'];
-            $_SESSION["username"] = $username;
-            $_SESSION["verified"] = $user['verified'];
-            header("Location: profile.php");
-            exit;
+            if (intval($user['role']) === 1){
+                    $_SESSION["user_id"] = $user['id'];
+                    $_SESSION["username"] = $username;
+                    $_SESSION["verified"] = $user['verified'];
+                    header("Location: profile.php");
+                    exit;
+            }
+
+            else if (intval($user['role']) === 2){
+                    $_SESSION["user_id"] = $user['id'];
+                    $_SESSION["username"] = $username;
+                    $_SESSION["verified"] = $user['verified'];
+                    header("Location: ../admin/index.php");
+                    exit;
+            }
+
+            else if (intval($user['role']) === 3){
+                $_SESSION["user_id"] = $user['id'];
+                $_SESSION["username"] = $username;
+                $_SESSION["verified"] = $user['verified'];
+                header("Location: ../admin/index.php");
+                exit;
+            }
+
 
 
         } else {

@@ -37,6 +37,13 @@ if (isset($event['data']['type']) && $event['data']['type'] === 'payment_intent'
     echo json_encode(['status' => 'failed', 'message' => 'Invalid event']);
 }
 
+
+
+
+
+
+#Functions
+
 // Function to store transaction details
 function storeTransaction($payment_intent_id, $user_id, $amount) {
 
@@ -50,7 +57,7 @@ function storeTransaction($payment_intent_id, $user_id, $amount) {
                          'amount' => $amount
                         ]);
 
-        // Add additional logic if needed, such as sending a confirmation email
+        
     } catch (PDOException $e) {
         error_log("Error storing transaction: " . $e->getMessage());
     }
