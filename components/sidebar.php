@@ -81,19 +81,15 @@
                     </a>
                     <ul id="forms-nav" class="nav-content collapse <?= ($pageTitle == 'Step Form 1') ? 'show' : '' ?>" data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="step_form_1.php" class="<?= ($pageTitle == 'Step Form 1') ? 'active' : '' ?>">
-                                <i class="bi bi-circle"></i><span>Online Cedula Application</span>
+                            <a class="nav-link <?= ($pageTitle == 'Payment History') ? '' : 'collapsed' ?>" href="create-payment.php">
+                                <i class="bi bi-clock-history"></i>
+                                <span>Create Payment</span>
                             </a>
                         </li>
                     </ul>
                 </li><!-- End Forms Nav -->
 
-                    <li class="nav-item">
-                        <a class="nav-link <?= ($pageTitle == 'Payment History') ? '' : 'collapsed' ?>" href="payment-history.php">
-                            <i class="bi bi-clock-history"></i>
-                            <span>Create Payment</span>
-                        </a>
-                    </li><!-- End Profile Page Nav -->
+                  
 
                     <li class="nav-item">
                         <a class="nav-link <?= ($pageTitle == 'Profile') ? '' : 'collapsed' ?>" href="profile.php">
