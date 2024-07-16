@@ -30,10 +30,13 @@ $headers = [
 ];
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount']))) 
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && (! empty($_GET['amount']))) 
 {
+
+    $cedula_amount = calculateCedulaPayment($_GET['amount']);
+
     //calculate with additional fee
-    $amount = floatval($_POST['amount']);
+    $amount = floatval($cedula_amount);
     $paymongo_fee = 2.5;
     $totalAmount = $amount + ($amount * ($paymongo_fee / 100));
 
@@ -44,6 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount'])))
 
     //transaction ID
     $transactionID = generateTransactionID();
+
+    
+    //make transaction record
+    $stmt = $db->prepare("INSERT INTO transactions (user_id, transaction_code, amount, created_at) VALUES (:user_id, :transaction_code, :amount, NOW())");
+    $stmt->bindParam(':user_id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':transaction_code', $transactionID, PDO::PARAM_STR);
+    $stmt->bindParam(':amount', $finalAmount, PDO::PARAM_INT);
+    $stmt->execute();
                 
 
     //create checkout
@@ -62,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (! empty($_POST['amount'])))
                                     'send_email_receipt' => true,
                                     'show_description' => true,
                                     'show_line_items' => true,
-                                    'success_url' => "http://localhost/ecedula/testSuccess.php?amount={$finalAmount}&transactionID={$transactionID}",
-                                    'cancel_url' => 'http://localhost/ecedula/pages/payment.php',
+                                    'success_url' => "http://localhost/ecedula/pages/testSuccess.php?amount={$finalAmount}&transactionID={$transactionID}&name={$name}",
+                                    'cancel_url' => 'http://localhost/ecedula/pages/create-payment.php',
                                     'line_items' => [
                                             [
                                                 'currency' => 'PHP',
@@ -120,5 +131,21 @@ else {
 
 function generateTransactionID()
 {
-    return uniqid();
+    return "T" . date("Y") . "-" . uniqid();
+}
+
+
+function calculateCedulaPayment($annual_income) 
+{
+    
+    $basic_tax = 5.00;
+
+    $income_tax = ceil($annual_income / 1000) * 1.00;
+
+    $fixed_fee = 7.70; 
+
+    $total_cedula_payment = $basic_tax + $income_tax + $fixed_fee;
+
+    return $total_cedula_payment;
+
 }

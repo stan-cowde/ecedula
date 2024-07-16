@@ -4,14 +4,18 @@
     $pageTitle = ucwords(str_replace(['_', '-'], ' ', $pageTitle));
     $pageTitle;
 
-
     $stmt = $db->prepare("SELECT * FROM users where id = :user_id");
     $stmt->bindParam(':user_id', $_SESSION['user_id']);
     $stmt->execute();
-    $user = $stmt->fetch();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (intval($user['verified']) != intval($_SESSION['verified'])){
-        $_SESSION['verified'] = $user['verified'];
+
+  // Check if a user was found
+  if ($user !== false) {
+    // Update the session verified status if it is different from the database
+        if (intval($user['verified']) != intval($_SESSION['verified'])) {
+            $_SESSION['verified'] = $user['verified'];
+        }
     }
 
 

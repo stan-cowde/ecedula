@@ -8,8 +8,6 @@ $db = new PDO('mysql:host=localhost;dbname=' . $db_name . ';charset=utf8', $db_u
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-
-
 //helper for csrf validation
 function validateCsrfToken($token) {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);

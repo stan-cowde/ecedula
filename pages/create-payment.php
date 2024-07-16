@@ -3,6 +3,13 @@ require_once ('../config/config.php');
 
 session_start();
 
+if ($_SESSION["verified"] === 0) :
+
+    header("location: dashboard.php");
+    exit;
+
+endif;
+
 $year = date("Y");
 
 $query = "SELECT 
@@ -81,62 +88,62 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
         <div class="container">
             <header>Cedula (Community Tax Certificate) Form</header>
             <hr>
-            <form>
-            <div class="form-floating form-group">
-                <select class="form-select form-select-sm" id="floatingSelect" aria-label="Floating label select example">
-                    <option>Select Brangay</option>
-                    <option value="Tres De Mayo" selected>Tres De Mayo</option>
-                </select>
-                <label for="floatingSelect">What barangay are you paying?</label>
+            <form action="submit_cedula.php" method="POST">
+                <div class="form-floating form-group">
+                    <select class="form-select form-select-sm" id="floatingSelect" name="barangay" aria-label="Select barangay">
+                        <option>Select Brangay</option>
+                        <option value="Tres De Mayo" selected>Tres De Mayo</option>
+                    </select>
+                    <label for="floatingSelect">What barangay are you paying?</label>
                 </div>
             <div class="form-group">
                 <label for="fullName">Full Name (Surname, Firstname Middlename)</label>
-                <input type="text" class="form-control" id="fullName" placeholder="Full Name" value="<?= $name ?>" disabled>
+                <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" value="<?= $name ?>" disabled>
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="Address" value="<?= $address ?>" required>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="<?= $address ?>" required>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="tin">Tax Identification No. (TIN)</label>
-                    <input type="text" class="form-control" id="tin" placeholder="TIN">
+                    <input type="text" class="form-control" id="tin" name="tin" placeholder="TIN">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="height">Height (cm)</label>
-                    <input type="number" class="form-control" id="height" placeholder="Height" required>
+                    <input type="number" class="form-control" id="height" name="height" placeholder="Height" required>
                 </div>
                 <div class="form-group col-md-3">
                     <label for="weight">Weight (kg)</label>
-                    <input type="number" class="form-control" id="weight" placeholder="Weight" required>
+                    <input type="number" class="form-control" id="weight" name="weight" placeholder="Weight" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="citizenship">Citizenship</label>
-                    <input type="text" class="form-control" id="citizenship" value="FILIPINO" required>
+                    <input type="text" class="form-control" id="citizenship" value="<?= $result['citizenship'] ?>" disabled required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="icrNo">I.C.R No. (If an Alien)</label>
-                    <input type="text" class="form-control" id="icrNo" placeholder="ICR No.">
+                    <input type="text" class="form-control" id="icrNo" name="icrNo" placeholder="ICR No.">
                 </div>
             </div>
             <div class="form-group">
                 <label for="placeOfBirth">Place of Birth</label>
-                <input type="text" class="form-control" id="placeOfBirth" placeholder="Place of Birth" value="<?= $result['municipality'] ?>" required>
+                <input type="text" class="form-control" id="placeOfBirth" name="placeOfBirth" placeholder="Place of Birth" value="<?= $result['municipality'] ?>" required>
             </div>
             <div class="form-group">
                 <label for="dateOfBirth">Date of Birth (mm/dd/yyyy): </label>
-                <input type="date" class="form-control" id="dateOfBirth" value="<?= $result['date_of_birth'] ?>" disabled>
+                <input type="date" class="form-control" id="dateOfBirth" name="placeOfBirth" value="<?= $result['date_of_birth'] ?>" disabled>
             </div>
             <div class="form-group">
                 <label for="profession">Profession or Occupation</label>
-                <input type="text" class="form-control" id="profession" placeholder="Profession or Occupation">
+                <input type="text" class="form-control" id="profession" name="profession" placeholder="Profession or Occupation">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="gender">Gender</label>
-                    <select class="form-control" id="gender" required>
+                    <select class="form-control" id="gender" name="gender" required>
                         <option value="MALE">MALE</option>
                         <option value="FEMALE">FEMALE</option>
                     </select>
@@ -156,8 +163,8 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
             <label for="annualIncome">Annual Income</label>
             <div class="input-group mb-3">
                     <span class="input-group-text">₱</span>
-                    <input type="text" class="form-control" name="amount" aria-label="Dollar amount (with dot and two decimal places)">
-                    </div>
+                    <input type="text" class="form-control" name="annualIncome" aria-label="Dollar amount (with dot and two decimal places)">
+              </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -197,7 +204,7 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
 
 
     <!-- Script -->
-    
+
 
 
 </body>
