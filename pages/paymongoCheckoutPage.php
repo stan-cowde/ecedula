@@ -9,7 +9,7 @@
  */
 
 session_start();
-require_once 'config/config.php';
+require_once '../config/config.php';
 
 $id = $_SESSION['user_id'];
 

@@ -73,7 +73,7 @@ session_start();
                        if ($_SESSION["verified"] === 0) {
                             echo '<div class="alert alert-warning" role="alert">Your account has not been verified yet. Please comply your documents to <a href="step_form_1.php">verify.</a></div>';
                         }else if($_SESSION["verified"] === 1){
-                            echo '<a href="step_form_1.php" class="btn-create-payment">Create Payment</a>';
+                            echo '<a href="create-payment.php" class="btn-create-payment">Create Payment</a>';
                         }else{
                             echo header('Location: ../index.php');
                         }

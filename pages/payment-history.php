@@ -5,8 +5,10 @@ session_start();
 $user_id = $_SESSION['user_id'];
 
 $query = "SELECT * FROM transactions where user_id = $user_id";
-
 $stmt = $db->prepare($query);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?>
 
@@ -82,43 +84,22 @@ $stmt = $db->prepare($query);
             <thead>
               <tr>
                 <th>
-                  <b>Name</b>
+                  <b>Transaction Code</b>
                 </th>
-                <th>Ext.</th>
-                <th>City</th>
+                <th>Amount</th>
+                <th>Status</th>
                 <th data-type="date" data-format="YYYY/DD/MM">Start Date</th>
-                <th>Completion</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Zelenia Roman</td>
-                <td>7516</td>
-                <td>Redwater</td>
-                <td>2012/03/03</td>
-                <td>31%</td>
-              </tr>
-              <tr>
-                <td>Zelenia Roman</td>
-                <td>7516</td>
-                <td>Redwater</td>
-                <td>2012/03/03</td>
-                <td>31%</td>
-              </tr>
-              <tr>
-                <td>Zelenia Roman</td>
-                <td>7516</td>
-                <td>Redwater</td>
-                <td>2012/03/03</td>
-                <td>31%</td>
-              </tr>
-              <tr>
-                <td>Zelenia Roman</td>
-                <td>7516</td>
-                <td>Redwater</td>
-                <td>2012/03/03</td>
-                <td>31%</td>
-              </tr>
+              <?php foreach($results as $result) :  ?>
+                <tr>
+                  <td><?= $result['transaction_code'] ?></td>
+                 <td><?= $result['amount'] ?></td>
+                 <td><?= $result['status'] ?></td>
+                 <td><?= $result['created_at'] ?></td>
+                </tr>
+              <?php endforeach ?>
             </tbody>
           </table>
         </div>
