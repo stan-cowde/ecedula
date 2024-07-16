@@ -26,9 +26,6 @@ $name = $result['last_name'] . ', ' . $result['first_name'];
 $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['barangay'] . ', '. $result['municipality'] . ', '. $result['address'];
 
 
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -197,6 +194,12 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
+
+
+    <!-- Script -->
+    
+
+
 </body>
 
 </html>
