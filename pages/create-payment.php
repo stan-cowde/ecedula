@@ -3,6 +3,11 @@ require_once ('../config/config.php');
 
 session_start();
 
+if (!$_SESSION['user_id']){
+    header('Location: ../index.php');
+    exit;
+}
+
 if ($_SESSION["verified"] === 0) :
 
     header("location: dashboard.php");
@@ -67,6 +72,8 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
     <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.2/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.2/dist/sweetalert2.min.js"></script>
 
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet">
@@ -188,7 +195,7 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
+    <!-- Vendor JS Files -->    
     <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/chart.js/chart.umd.js"></script>
@@ -202,9 +209,15 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
 
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.all.min.js
+"></script>
+
 
     <!-- Script -->
-
+    <script>
+        
+    </script>
 
 
 </body>

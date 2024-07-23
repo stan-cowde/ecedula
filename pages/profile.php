@@ -3,6 +3,15 @@ require_once('../config/config.php');
 
 session_start();
 
+$query = 'SELECT users.*,
+                 personal_details.*
+                 FROM users
+                 JOIN personal_details ON users.id = personal_details.user_id 
+          where users.id = ' . $_SESSION['user_id'];
+$stmt = $db->prepare($query);
+$stmt->execute();
+$info = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,10 +122,6 @@ session_start();
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                                </li>
-
-                                <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
                                 </li>
 
@@ -130,18 +135,8 @@ session_start();
                                     <h5 class="card-title">Profile Details</h5>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label "><?= isset($_SESSION["username"]) ? $_SESSION["username"] : ""; ?></div>
-                                        <div class="col-lg-9 col-md-8"><?= isset($_SESSION["username"]) ? $_SESSION["username"] : ""; ?></div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Company</div>
-                                        <div class="col-lg-9 col-md-8"></div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Job</div>
-                                        <div class="col-lg-9 col-md-8" placeholder= "eg. teacher"></div>
+                                        <div class="col-lg-3 col-md-4 label ">Name</div>
+                                        <div class="col-lg-9 col-md-8"><?= $info["firstname"] . ' ' . $info["lastname"]; ?></div>
                                     </div>
 
                                     <div class="row">
@@ -150,18 +145,13 @@ session_start();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Address</div>
-                                        <div class="col-lg-9 col-md-8"></div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Phone</div>
-                                        <div class="col-lg-9 col-md-8">+639121878744</div>
+                                        <div class="col-lg-3 col-md-4 label">Citizenship</div>
+                                        <div class="col-lg-9 col-md-8"><?= $info['citizenship']; ?></div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8"></div>
+                                        <div class="col-lg-9 col-md-8"><?= $info['email']; ?></div>
                                     </div>
 
                                 </div>
@@ -274,44 +264,6 @@ session_start();
 
                                 <div class="tab-pane fade pt-3" id="profile-settings">
 
-                                    <!-- Settings Form -->
-                                    <form>
-
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                                    <label class="form-check-label" for="changesMade">
-                                                        Changes made to your account
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                                                    <label class="form-check-label" for="newProducts">
-                                                        Information on new products and services
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="proOffers">
-                                                    <label class="form-check-label" for="proOffers">
-                                                        Marketing and promo offers
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="securityNotify" checked>
-                                                    <label class="form-check-label" for="securityNotify">
-                                                        Security alerts
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        </div>
-                                    </form><!-- End settings Form -->
-
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password">
@@ -321,7 +273,7 @@ session_start();
                                         <div class="row mb-3">
                                             <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control" id="currentPassword">
+                                                <input name="password" type="password" class="form-control" id="currentPassword" value="********">
                                             </div>
                                         </div>
 
@@ -369,6 +321,7 @@ session_start();
 
     <!-- Vendor JS Files -->
     <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/chart.js/chart.umd.js"></script>
     <script src="../assets/vendor/echarts/echarts.min.js"></script>

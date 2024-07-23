@@ -1,8 +1,13 @@
 <?php
+
 require_once('../config/config.php');
 
-
 session_start();
+
+if (isset($_SESSION['user_id'])){
+    header('Location: dashboard.php');
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["username"]) && !empty($_POST["password"])) {
@@ -86,6 +91,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <main>
+
+
+    <?php if (isset($_SESSION['message']) === true) : ?>
+
+        <div class="toast-container top-0 end-0 p-3">
+        <div id="welcomeToast" data-example-toggle="toast" class="toast text-bg-success" role="alert">
+        <div class="toast-body">
+            <div class="d-flex">
+            <span><i class="fa-solid fa-circle-check fa-lg"></i></span>
+            <div class="d-flex flex-grow-1 align-items-center justify-content-center">
+                <span class="fw-semibold">Account Created</span>
+                🎉
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        </div>
+        </div>
+
+    <?php
+        endif; 
+    ?>
+
+
         <div class="container">
             <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
@@ -172,6 +201,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
+
+
+     <script>
+            let message = <?= isset($_SESSION['message']) ? $_SESSION['message'] : false; ?>; 
+
+            // Get the toast element
+            const toastEl = document.getElementById('welcomeToast');
+
+            // Initialize the toast (Bootstrap's way of activating it)
+            const toast = new bootstrap.Toast(toastEl);
+
+            // Auto-show if the message is true
+            if (message) {
+             toast.show();
+            }
+
+            // Auto-hide
+            setTimeout(() => {
+            toast.hide();
+            }, 3000); 
+
+     </script>
+
+     <?php 
+        unset($_SESSION['message']);    
+     ?>
+    
 </body>
 
 </html>

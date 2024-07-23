@@ -4,14 +4,21 @@ require_once('../config/config.php');
 
 session_start();
 
+if (!$_SESSION['user_id']){
+    header('Location: ../index.php');
+    exit;
+}
+
 if ($_SESSION["verified"] === 1) :
 
     $stmt = $db->prepare("SELECT * FROM transactions WHERE user_id = " . $_SESSION['user_id'] . " ORDER BY created_at DESC LIMIT 10");
     $stmt->execute();
     $recentTransactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $totalPaid = totalYearsPaid($_SESSION['user_id']);
+    $PaidByCurrentYear = totalPaidByCurrentYear($_SESSION['user_id']);
 
 endif;
-
 
 
 ?>
@@ -105,25 +112,19 @@ endif;
                     <div class="col-md-3">
                         <div class="dashboard-card">
                             <div class="card-title">Total Amount Paid (All Years)</div>
-                            <div class="card-value">₱<?php echo 22; ?></div>
+                            <div class="card-value">₱<?= isset($totalPaid) ? $totalPaid : 0; ?></div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="dashboard-card">
                             <div class="card-title">Total Amount Paid (This Year)</div>
-                            <div class="card-value">₱<?php echo 22; ?></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="dashboard-card">
-                            <div class="card-title">Total Transactions</div>
-                            <div class="card-value"><?php echo 22; ?></div>
+                            <div class="card-value">₱<?= isset($PaidByCurrentYear) ? $PaidByCurrentYear : 0; ?></div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="dashboard-card">
                             <div class="card-title">Average Transaction Amount</div>
-                            <div class="card-value">₱<?php echo 22; ?></div>
+                            <div class="card-value">₱<?= isset($PaidByCurrentYear) ? $PaidByCurrentYear : 0; ?></div>
                         </div>
                     </div>
                 </div>
@@ -147,7 +148,7 @@ endif;
                                 <tr>
                                     <td><?php echo htmlspecialchars($transaction['created_at']); ?></td>
                                     <td><?php echo htmlspecialchars($transaction['transaction_code']); ?></td>
-                                    <td>₱<?php echo number_format($transaction['amount'] / 100, 2); ?></td>
+                                    <td>₱<?php echo $transaction['amount']; ?></td>
                                     <td><?php echo htmlspecialchars($transaction['status']); ?></td>
                                 </tr>
                             <?php endforeach; 

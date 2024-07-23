@@ -3,6 +3,11 @@ require_once('../config/config.php');
 
 session_start();
 
+if (isset($_SESSION['user_id'])){
+    header('Location: dashboard.php');
+    exit;
+}
+
 if (isset($_POST['create'])) {
     $firstname            = $_POST['firstname'];
     $lastname             = $_POST['lastname'];
@@ -26,11 +31,12 @@ if (isset($_POST['create'])) {
     } elseif ($existingEmail) {
         $message = 'Email already exists.';
     } else {
-        $sql = "INSERT INTO users (firstname, lastname, email, username, password ) VALUES(?,?,?,?,?)";
+        $sql = "INSERT INTO users (firstname, lastname, email, username, password, created_at, updated_at) VALUES(?,?,?,?,?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         $stmtinsert = $db->prepare($sql);
         $result = $stmtinsert->execute([$firstname, $lastname, $email, $username, $hashedPassword]);
 
         if ($result) {
+            $_SESSION['message'] = true;
             header("Location: login-user.php");
             exit;
         } else {

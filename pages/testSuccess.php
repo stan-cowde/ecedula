@@ -39,6 +39,8 @@ session_start();
     }
 
 
+    
+
 
 
 ?>
@@ -107,7 +109,7 @@ session_start();
                 <div>
                     <p>Transaction ID: <?php echo htmlspecialchars($_GET['transactionID']); ?></p>
                     <p>Transaction Name: <?php echo htmlspecialchars($name); ?></p>
-                    <p>Transaction Amount: <?php echo htmlspecialchars($_GET['amount']) / 100; ?></p>
+                    <p>Transaction Amount: <?php echo htmlspecialchars($_GET['amount']); ?></p>
                 </div>
         </section>
 

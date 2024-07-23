@@ -42,8 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && (! empty($_GET['amount'])))
 
 
     //centavos conversion for final amount
-    $finalAmount = intval($totalAmount * 100);
+    ECHO $semifinalAmount = intval($totalAmount * 100);
 
+          $sfinalamount = number_format($semifinalAmount / 100, 2);
+      $finalAmount = number_format((float)$sfinalamount, 2, '.', '');
+   
 
     //transaction ID
     $transactionID = generateTransactionID();
@@ -53,10 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && (! empty($_GET['amount'])))
     $stmt = $db->prepare("INSERT INTO transactions (user_id, transaction_code, amount, created_at) VALUES (:user_id, :transaction_code, :amount, NOW())");
     $stmt->bindParam(':user_id', $id, PDO::PARAM_INT);
     $stmt->bindParam(':transaction_code', $transactionID, PDO::PARAM_STR);
-    $stmt->bindParam(':amount', $finalAmount, PDO::PARAM_INT);
+    $stmt->bindParam(':amount', $finalAmount, PDO::PARAM_STR);
     $stmt->execute();
-                
-
+           
     //create checkout
             $ch = curl_init('https://api.paymongo.com/v1/checkout_sessions');
             curl_setopt_array($ch, [
@@ -78,12 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && (! empty($_GET['amount'])))
                                     'line_items' => [
                                             [
                                                 'currency' => 'PHP',
-                                                'amount' => $finalAmount,
+                                                'amount' => intval($semifinalAmount . 00),
                                                 'name' => 'cedula',
                                                 'quantity' => 1
                                             ]
                                     ],
-                                    'description' => 'Joana olarte company',
+                                    'description' => 'E-cedula Company',
                                     'payment_method_types' => [
                                                     'gcash',
                                                     'paymaya'
@@ -116,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && (! empty($_GET['amount'])))
                         header('Location: '. $joana_redirect);
                         exit;
                     }else{
-                        echo 'Error: Unable to get checkout URL';
+                        echo 'Error: Unable to get checkout URL: ' . $joana;
                         exit;
                     }
                 }
@@ -142,9 +144,7 @@ function calculateCedulaPayment($annual_income)
 
     $income_tax = ceil($annual_income / 1000) * 1.00;
 
-    $fixed_fee = 7.70; 
-
-    $total_cedula_payment = $basic_tax + $income_tax + $fixed_fee;
+    $total_cedula_payment = $basic_tax + $income_tax;
 
     return $total_cedula_payment;
 
