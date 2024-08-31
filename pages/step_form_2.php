@@ -162,12 +162,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <img id="preview" src="<?php echo $valid_id; ?>" class="image-preview">
                                     </div>
                                     <input name="uploadfile" type="file" accept="image/*" onchange="previewImage(event)">
-
                                 </div>
 
                                 <div class="input-field">
                                     <label>ID Number</label>
-                                    <input name="id_number" type="number" placeholder="Enter ID number" value="<?php echo $id_number; ?>" required>
+                                    <input name="id_number" type="text" placeholder="Enter ID number" value="<?php echo $id_number; ?>" required>
                                 </div>
 
                                 <div class="input-field">
@@ -244,24 +243,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="../assets/vendor/php-email-form/validate.js"></script>
 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('input[name="uploadfile"]').on('change', function(){
+                var formData = new FormData();
+                formData.append('uploadfile', this.files[0]);
+
+                $.ajax({
+                    url: 'process_image.php',  // PHP endpoint that calls the Python script
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        // Assuming the response is JSON with OCR data
+                        var data = JSON.parse(response);
+                        $('input[name="id_number"]').val(data['id_number']);
+                        $('input[name="place_of_birth"]').val(data['address']);
+                    }
+                });
+            });
+        });
+    </script>
+
+
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
 
-    <script type="text/javascript">
-        function previewImage(event) {
-            var input = event.target;
-            var image = document.getElementById('preview');
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    image.src = e.target.result;
+        <script type="text/javascript">
+            function previewImage(event) {
+                var input = event.target;
+                var image = document.getElementById('preview');
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        image.src = e.target.result;
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    image.src = ''; // Clear the preview if no file selected
                 }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                image.src = ''; // Clear the preview if no file selected
             }
-        }
-    </script>
+        </script>
 </body>
 
 </html>

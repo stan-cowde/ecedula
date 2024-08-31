@@ -4,6 +4,7 @@ require_once('../config/config.php');
 session_start();
 
 include('includes/header.php');
+include('includes/sidebar.php');
 include('includes/navbar.php');
 
 if (isset($_POST['edit_btn'])) {
@@ -36,19 +37,26 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($current_page - 1) * $records_per_page;
 
 $stmt = $db->prepare("SELECT 
-                        ar.id AS id,
-                            ar.status,
-                            ar.reviewed_by,
-                            ar.created_at AS application_created_at,
-                            ar.updated_at AS application_updated_at,
-                            u.firstname,
-                            u.lastname,
-                            u.email,
-                            u.username
-                        FROM 
-                            application_request ar
-                        JOIN 
-                            users u ON ar.user_id = u.id WHERE status = 'Pending' AND u.verified = 0 LIMIT :offset, :limit");
+                        ar.*,
+                        u.*,
+                        ad.*,
+                        fd.*,
+                        id.*,
+                        pd.*
+                          FROM 
+                              application_request ar
+                          INNER JOIN 
+                              users u ON ar.user_id = u.id 
+                          INNER JOIN 
+                              address_details ad ON ar.user_id = ad.user_id 
+                          INNER JOIN 
+                              family_details fd ON ar.user_id = fd.user_id 
+                          INNER JOIN 
+                              identity_details id ON ar.user_id = id.user_id 
+                          INNER JOIN 
+                              personal_details pd ON ar.user_id = pd.user_id 
+                          WHERE ar.status = 'Pending'
+                          AND u.verified = 0 LIMIT :offset, :limit");
 $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 $stmt->bindParam(':limit', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();
@@ -85,7 +93,7 @@ $total_pages = ceil($total_records / $records_per_page);
           <tr>
             <td><?php echo $row['id']; ?></td>
             <td>
-              <a href="user-details.php?id=<?php echo $row['id']; ?>">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#userProfileModal">
                 <?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?>
               </a>
             </td>
@@ -104,7 +112,10 @@ $total_pages = ceil($total_records / $records_per_page);
               </form>
             </td>
           </tr>
-        <?php endforeach; ?>
+        <?php
+            require 'modal/user-profile.php';
+            endforeach;
+        ?>
       </table>
 
       <div class="d-flex justify-content-center mt-4">
@@ -118,6 +129,8 @@ $total_pages = ceil($total_records / $records_per_page);
           </ul>
         </nav>
       </div>
+
+
 
     </div>
   </div>

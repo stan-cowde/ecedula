@@ -178,6 +178,9 @@ $address = $result['street'] . ', '. $result['block_number'] . ', '. $result['ba
         </div>
 
 
+        
+
+
     </main><!-- End #main -->
 
     <script src="../assets/js/script.js"></script>

@@ -1,10 +1,40 @@
 <?php
-require_once('../config/config.php');
+require ('../config/config.php');
 
 session_start();
 
 include('includes/header.php');
+include('includes/sidebar.php');
 include('includes/navbar.php');
+
+
+$currentYear = date('Y');
+
+
+$totalApplicantsActiveThisYear = totalApplicantsActiveThisYear($currentYear);
+$NumberOfApplicants = isset($totalApplicantsActiveThisYear) ? $totalApplicantsActiveThisYear : '0';
+
+$totalRevenueFromPaymentsThisYear =  totalRevenueFromPaymentsThisYear($currentYear);
+$totalPaidByCurrentYear = isset($totalRevenueFromPaymentsThisYear) ? $totalRevenueFromPaymentsThisYear : '0';
+
+$totalActiveTaxPayersThisYear = totalActiveTaxPayersThisYear($currentYear);
+$totalActiveTaxPayersThisYear = isset($totalActiveTaxPayersThisYear) ? $totalActiveTaxPayersThisYear : '0';
+
+$totalActiveStaffThisYear = totalActiveStaffThisYear($currentYear);
+$totalActiveStaffThisYear = isset($totalActiveStaffThisYear) ? $totalActiveStaffThisYear : '0';
+
+$revenueData = getMonthlyRevenue($currentYear);
+$revenueData = isset($revenueData) ? $revenueData : [];
+
+$currentYear = date('Y');
+$startYear = $currentYear;
+$endYear = $currentYear + 5;
+
+// Generate revenue data for each year
+$revenueDataByYear = [];
+for ($year = $startYear; $year <= $endYear; $year++) {
+    $revenueDataByYear[$year] = getMonthlyRevenue($year);
+}
 
 ?>
 
@@ -20,32 +50,32 @@ include('includes/navbar.php');
                 <div class="col-md-3 mb-4">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Total e-cedula Applications</h5>
-                            <h2 class="card-text">1,234</h2>
+                            <h5 class="card-title">Total e-cedula Applications (<?php echo date("Y"); ?>)</h5>
+                            <h2 class="card-text"><?= $NumberOfApplicants; ?></h2>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Total Revenue from Payments</h5>
-                            <h2 class="card-text">₱ 12,345</h2>
+                            <h5 class="card-title">Total Revenue from Payments (<?php echo date("Y"); ?>)</h5>
+                            <h2 class="card-text">₱<?=  $totalRevenueFromPaymentsThisYear; ?></h2>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Number of Active Users</h5>
-                            <h2 class="card-text">567</h2>
+                            <h5 class="card-title">Number of Active Taxpayers (<?php echo date("Y"); ?>)</h5>
+                            <h2 class="card-text"><?= $totalActiveTaxPayersThisYear; ?></h2>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Number of Active Staff Members</h5>
-                            <h2 class="card-text">89</h2>
+                            <h5 class="card-title">Number of Active Staff Members (<?php echo date("Y"); ?>)</h5>
+                            <h2 class="card-text"><?= $totalActiveStaffThisYear; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -57,12 +87,12 @@ include('includes/navbar.php');
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="mb-0">Annual Payment Projection</h5>
                             <select id="yearSelect" class="form-select w-auto" onchange="updateChart()">
-                                <script>
-                                    const currentYear = new Date().getFullYear();
-                                    for (let i = 0; i <= 5; i++) {
-                                        document.write(`<option value="${currentYear + i}">${currentYear + i}</option>`);
-                                    }
-                                </script>
+                                <?php
+                                $currentYear = date('Y');
+                                for ($year = $currentYear; $year <= $currentYear + 5; $year++) {
+                                    echo "<option value=\"$year\">$year</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                         <canvas id="projectionChart"></canvas>
@@ -82,14 +112,17 @@ include('includes/footer.php');
 ?>
 
 <script>
+
+    var revenueDataByYear = <?= json_encode($revenueDataByYear); ?>;
+
         const ctxx = document.getElementById('projectionChart').getContext('2d');
         let projectionChart = new Chart(ctxx, {
             type: 'line',
             data: {
                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 datasets: [{
-                    label: 'Revenue',
-                    data: [1200, 1900, 3000, 5000, 2300, 3200, 4000, 3900, 4500, 4800, 5200, 6000],
+                    label: `Revenue ${<?php echo $currentYear; ?>}`,
+                    data: revenueDataByYear[<?=  $currentYear; ?>],
                     borderColor: 'red',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: true,
@@ -105,13 +138,13 @@ include('includes/footer.php');
             }
         });
 
-        function updateChart() {
-            const selectedYear = document.getElementById('yearSelect').value;
-            // Here you would fetch the data for the selected year and update the chart.
-            // For demonstration purposes, we are just updating the label.
-            projectionChart.data.datasets[0].label = `Revenue ${selectedYear}`;
-            projectionChart.update();
-        }
+    function updateChart() {
+        const selectedYear = document.getElementById('yearSelect').value;
+
+        projectionChart.data.datasets[0].data = revenueDataByYear[selectedYear];
+        projectionChart.data.datasets[0].label = `Revenue ${selectedYear}`;
+        projectionChart.update();
+    }
     </script>
 
 

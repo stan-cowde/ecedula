@@ -4,7 +4,9 @@ require_once ('../config/config.php');
 session_start();
 
 include ('includes/header.php');
+include('includes/sidebar.php');
 include ('includes/navbar.php');
+
 
 $records_per_page = 10;
 
@@ -23,15 +25,15 @@ $total_records = $db->query("SELECT COUNT(*) FROM users WHERE verified = 1")->fe
 $total_pages = ceil($total_records / $records_per_page);
 ?>
 
-    <div class="card-body">
+<div class="card-body">
 
         <div class="table-responsive">
         <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus"></i> Create Account</a> 
-    </div>
-            <h4>Approved Users</h4>
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createAccountModal"><i class="fas fa-plus"></i> Create Account</a> 
+            </div>
+            <h4>Accounts Table</h4>
 
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -59,7 +61,10 @@ $total_pages = ceil($total_records / $records_per_page);
                                     class="fas fa-trash" style="color: #ff0000;"></i></a>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php 
+                require 'modal/create-account.php';
+                endforeach; 
+                ?>
             </table>
 
             <div class="d-flex justify-content-center mt-4">

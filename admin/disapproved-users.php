@@ -4,7 +4,9 @@ require_once('../config/config.php');
 session_start();
 
 include('includes/header.php');
+include('includes/sidebar.php');
 include('includes/navbar.php');
+
 
 $records_per_page = 10;
 
@@ -12,7 +14,27 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 $offset = ($current_page - 1) * $records_per_page;
 
-$stmt = $db->prepare("SELECT * FROM users WHERE verified = 0 LIMIT :offset, :limit");
+$stmt = $db->prepare("SELECT 
+                            ar.*,
+                            u.*,
+                            ad.*,
+                            fd.*,
+                            id.*,
+                            pd.*
+                            FROM 
+                                application_request ar
+                            INNER JOIN 
+                                users u ON ar.user_id = u.id 
+                            INNER JOIN 
+                                address_details ad ON ar.user_id = ad.user_id 
+                            INNER JOIN 
+                                family_details fd ON ar.user_id = fd.user_id 
+                             INNER JOIN 
+                                identity_details id ON ar.user_id = id.user_id 
+                             INNER JOIN 
+                                personal_details pd ON ar.user_id = pd.user_id 
+                            WHERE ar.status = 'Denied'
+                            AND u.verified = 0 LIMIT :offset, :limit");
 $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 $stmt->bindParam(':limit', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();
@@ -49,14 +71,17 @@ $total_pages = ceil($total_records / $records_per_page);
                     <tr>
                         <td><?php echo $row['id']; ?></td>
                         <td>
-                            <a href="user-details.php?id=<?php echo $row['id']; ?>">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#userProfileModal">
                                 <?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?>
                             </a>
                         </td>
                         <td><?php echo $row['username']; ?></td>
                         <td><?php echo $row['email']; ?></td>
                     </tr>
-                <?php endforeach; ?>
+                 <?php
+                    require ('modal/user-profile.php');
+                endforeach;
+                ?>
             </table>
 
             <div class="d-flex justify-content-center mt-4">

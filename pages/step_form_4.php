@@ -1,8 +1,19 @@
 <?php
+require '../vendor/autoload.php';
 require_once('../config/config.php');
 
 session_start();
 $user_id = $_SESSION['user_id'];
+
+$pusher = new Pusher\Pusher(
+    '68ddaf7150dde8f203ae',
+    'e4ed7af30a4578e66280',
+    '1562105',
+    [
+        'cluster' => 'ap1',
+        'useTLS' => true
+    ]
+);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $father_name = $_POST['father_name'];
@@ -49,14 +60,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $application_request = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (! $application_request) {
-            $stmt = $db->prepare("INSERT INTO application_request 
-                                    (user_id, created_at, updated_at) 
-                            VALUES 
-                                    (:user_id2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);");
-        
+        $stmt = $db->prepare("INSERT INTO application_request 
+                        (user_id, created_at, updated_at) 
+                VALUES 
+                        (:user_id2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);");
+
         $stmt->bindParam(':user_id2', $user_id);
         $stmt->execute();
+
+        // Trigger the Pusher event
+        $data['message'] = 'A new applicant is pending approval!';
+        $pusher->trigger('admin-notifications', 'new-applicant', $data);
     }
+
 
 
     header("Location: verification_request.php");
