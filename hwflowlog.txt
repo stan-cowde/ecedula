@@ -1,0 +1,7 @@
+Manufacturer:Huawei Technologies Co., Ltd;
+ProductClass:HG8145V5 V2;
+SerialNumber:48575443AB9087AC;
+IP:10.44.76.4;
+HWVer:326D.A;
+SWVer:V5R020C10S234;
+
