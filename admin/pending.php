@@ -37,26 +37,26 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($current_page - 1) * $records_per_page;
 
 $stmt = $db->prepare("SELECT 
-                        ar.*,
-                        u.*,
-                        ad.*,
-                        fd.*,
-                        id.*,
-                        pd.*
-                          FROM 
-                              application_request ar
-                          INNER JOIN 
-                              users u ON ar.user_id = u.id 
-                          INNER JOIN 
-                              address_details ad ON ar.user_id = ad.user_id 
-                          INNER JOIN 
-                              family_details fd ON ar.user_id = fd.user_id 
-                          INNER JOIN 
-                              identity_details id ON ar.user_id = id.user_id 
-                          INNER JOIN 
-                              personal_details pd ON ar.user_id = pd.user_id 
-                          WHERE ar.status = 'Pending'
-                          AND u.verified = 0 LIMIT :offset, :limit");
+                                  ar.*,
+                                  u.*,
+                                  ad.*,
+                                  fd.*,
+                                  id.*,
+                                  pd.*
+                                    FROM 
+                                        application_request ar
+                                    INNER JOIN 
+                                        users u ON ar.user_id = u.id 
+                                    INNER JOIN 
+                                        address_details ad ON ar.user_id = ad.user_id 
+                                    INNER JOIN 
+                                        family_details fd ON ar.user_id = fd.user_id 
+                                    INNER JOIN 
+                                        identity_details id ON ar.user_id = id.user_id 
+                                    INNER JOIN 
+                                        personal_details pd ON ar.user_id = pd.user_id 
+                                    WHERE ar.status = 'Pending'
+                                    AND u.verified = 0 LIMIT :offset, :limit");
 $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 $stmt->bindParam(':limit', $records_per_page, PDO::PARAM_INT);
 $stmt->execute();

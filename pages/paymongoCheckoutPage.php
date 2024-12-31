@@ -93,11 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && (! empty($_GET['amount'])))
                             ]
                         ]
                     ]),
-                    CURLOPT_HTTPHEADER => [
-                        "Content-Type: application/json",
-                        "accept: application/json",
-                        "authorization: Basic ". base64_encode($api_key)
-                    ],
+                    CURLOPT_HTTPHEADER => $headers,
             ]);
 
             $joana = curl_exec($ch);

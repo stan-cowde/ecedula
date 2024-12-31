@@ -2,12 +2,15 @@
 
 require_once('../config/config.php');
 
+
 session_start();
+
 
 if (isset($_SESSION['user_id'])){
     header('Location: dashboard.php');
     exit;
 }
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["username"]) && !empty($_POST["password"])) {
