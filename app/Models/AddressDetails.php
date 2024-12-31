@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class AddressDetails extends Model
+{
+    public $table = 'address_details';
+
+    protected $fillable = [
+        'user_id',
+        'address',
+        'nationality',
+        'municipality',
+        'barangay',
+        'block_number',
+        'street',
+    ];
+
+    public function user() : belongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+}
