@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('collection_and_deposit_reports', function (Blueprint $table) {
+        Schema::create('collection_reports', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('payor');
             $table->string('particulars');
-            $table->bigInteger('amount', 13);
+            $table->decimal('amount', 10, 2);
             $table->timestamps();
         });
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collection_and_deposit_reports');
+        Schema::dropIfExists('collection_reports');
     }
 };

@@ -43,6 +43,17 @@
                         @error('fee') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>
+
+                <div class="form-group mb-3">
+                    <h4>Payment Summary</h4>
+                    <p>Total income fee: <span wire:text="fee"></span></p>
+                    <p>Service Fee:
+                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="Service fee that Paymongo charges for processing payments.">
+                            <i class="bi bi-question-circle"></i>
+                        </span>
+                        <span wire:text="paymongo_fee"></span>
+                    </p>
+                </div>
             </div>
 
             <!-- Vertical Separator -->
@@ -55,7 +66,31 @@
                 <div class="form-floating form-group mb-4">
                     <select wire:model="barangay" class="form-select form-select-sm" id="floatingSelect" aria-label="Select barangay" required>
                         <option selected>Select Barangay</option>
+                        <option value="Aplaya">Aplaya</option>
+                        <option value="Balabag">Balabag</option>
+                        <option value="Binaton">Binaton</option>
+                        <option value="Cogon">Cogon</option>
+                        <option value="Colorado">Colorado</option>
+                        <option value="Dawis">Dawis</option>
+                        <option value="Dulangan">Dulangan</option>
+                        <option value="Goma">Goma</option>
+                        <option value="Igpit">Igpit</option>
+                        <option value="Kapatagan">Kapatagan</option>
+                        <option value="Lungag">Lungag</option>
+                        <option value="Mahayahay">Mahayahay</option>
+                        <option value="Matti">Matti</option>
+                        <option value="Pandanon">Pandanon</option>
+                        <option value="San Agustin">San Agustin</option>
+                        <option value="San Jose">San Jose</option>
+                        <option value="San Miguel">San Miguel</option>
+                        <option value="San Roque">San Roque</option>
+                        <option value="Sinawilan">Sinawilan</option>
+                        <option value="Soong">Soong</option>
+                        <option value="Tiguman">Tiguman</option>
                         <option value="Tres De Mayo">Tres De Mayo</option>
+                        <option value="Zone 1">Zone 1</option>
+                        <option value="Zone 2">Zone 2</option>
+                        <option value="Zone 3">Zone 3</option>
                     </select>
                     <label for="floatingSelect">What barangay are you paying?</label>
                     @error('barangay') <span class="text-danger">{{ $message }}</span> @enderror
@@ -112,6 +147,7 @@
                             <option>Choose Your Gender</option>
                             <option value="MALE">MALE</option>
                             <option value="FEMALE">FEMALE</option>
+                            <option value="OTHER">OTHER</option>
                         </select>
                         @error('gender') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>

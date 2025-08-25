@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('personal_details', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('user_id')->index('user_id');
+            $table->integer('user_id')->index('personal_details_user_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_name');
             $table->string('citizenship');
             $table->date('date_of_birth');
             $table->string('gender');
-            $table->decimal('weight', 5);
-            $table->decimal('height', 6);
+            $table->decimal('weight', 5, 2);
+            $table->decimal('height', 6, 2);
             $table->string('civil_status');
             $table->timestamps();
         });

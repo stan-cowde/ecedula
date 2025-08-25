@@ -3,11 +3,12 @@
 @section('main')
 
     <main id="maintwo" class="maintwo d-flex flex-column align-items-center justify-content-center vh-100">
-        <div class="grid-container justify-content-center">
-            <img src="{{ asset('assets/img/positive-vote.png') }}" id="thumbs-up">
+        <div class="grid-container text-center">
+            <img src="{{ asset('assets/img/positive-vote.png') }}" id="thumbs-up" class="mx-auto">
             <h1>Verification on process !</h1>
             <p class="quote">
-                "Hold on a sec! We're verifying your details. This might take a moment, like convincing a cat to take a bath. 🐱🚿"
+                "Hold on a sec! We're verifying your details. This might take a moment, like convincing a cat to take a
+                bath. 🐱🚿"
             </p>
         </div>
     </main>
@@ -86,13 +87,10 @@
 
 @section('js')
     <!-- Vendor JS Files -->
-    <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+    <!---->
+
+
+
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>

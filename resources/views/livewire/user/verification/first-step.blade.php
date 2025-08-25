@@ -1,7 +1,5 @@
 <div>
-
-
-    <form wire:submit.prevent="submit">
+    <form wire:submit.prevent="saveFirstStep">
         <div class="form first">
             <div class="details personal">
                 <span class="title">Personal Details</span>
@@ -28,12 +26,12 @@
                     <div class="input-field">
                         <label>Gender</label>
                         <select wire:model="gender" required class="form-select form-select-lg mb-3">
-                            <option value="" disabled selected>Choose a gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="" disabled>Choose a gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                             <option value="other">Other</option>
                         </select>
-                        @error('gender') <span class="error">{{ $message }}</span> @enderror
+                        @error('gender') <small class="error text-danger">{{ $message }}</small> @enderror
                     </div>
 
                     <div class="input-field">
@@ -50,7 +48,14 @@
 
                     <div class="input-field">
                         <label>Civil Status</label>
-                        <input wire:model="civil_status" type="text" placeholder="Enter Civil Status" required>
+                        <select class="form-control" id="civilStatus" wire:model="civil_status">
+                            <option>Choose Your Civil Status</option>
+                            <option value="SINGLE">SINGLE</option>
+                            <option value="MARRIED">MARRIED</option>
+                            <option value="WIDOWED">WIDOWED</option>
+                            <option value="LEGALLY SEPARATED">LEGALLY SEPARATED</option>
+                            <option value="DIVORCED">DIVORCED</option>
+                        </select>
                         @error('civil_status') <span class="error">{{ $message }}</span> @enderror
                     </div>
 
@@ -67,11 +72,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="nextBtn">
-                    <span class="btnText">Next</span>
-                    <i class="bi bi-arrow-right-circle"></i>
-                </button>
-
+                <div class="buttons" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                    <button type="submit" class="nextBtn">
+                        <span class="btnText">Next</span>
+                        <i class="bi bi-arrow-right-circle"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </form>

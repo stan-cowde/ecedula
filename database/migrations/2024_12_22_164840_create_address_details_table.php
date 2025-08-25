@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('address_details', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('user_id')->index('account_id');
+            $table->integer('user_id')->index('address_details_user_id');
             $table->string('address');
-            $table->string('nationality');
+            $table->string('birth_place');
             $table->string('municipality');
             $table->string('barangay');
             $table->string('block_number');

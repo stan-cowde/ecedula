@@ -57,33 +57,45 @@ class PendingTable extends Component
 
         if ($status == 'Approved') {
 
-            \DB::table("application_request")
-                ->join('users', 'application_request.user_id', '=', 'users.id')
-                ->where('application_request.id', $id)
-                ->where('application_request.status', 'Pending')
-                ->update([
-                    'application_request.status' => "Approved",
-                    'users.verified' => 1,
-                    'application_request.reviewed_by' => \Auth::user()->id,
-                    'application_request.updated_at' => now()
-                ]);
+            \DB::transaction(function () use ($id, $user_id) {
+                // Update the application_request record
+                \DB::table('application_request')
+                    ->where('id', $id)
+                    ->where('status', 'Pending')
+                    ->update([
+                        'status' => 'Approved',
+                        'reviewed_by' => \Auth::user()->id,
+                        'updated_at' => now(),
+                    ]);
 
-            flash()->success('success!');
+                // Update the related user's verified flag
+                if ($user_id) {
+                    \DB::table('users')->where('id', $user_id)->update(['verified' => 1]);
+                }
+            });
+
+            flash()->success('Applicant Approved!');
 
         }else if ($status == 'rejected') {
 
-            \DB::table("users")
-                ->join('application_request', 'application_request.user_id', '=', 'users.id')
-                ->where('application_request.id', $id)
-                ->where('application_request.status', 'Pending')
-                ->update([
-                    'application_request.status' => "Denied",
-                    'users.verified' => 0,
-                    'application_request.reviewed_by' => \Auth::user()->id,
-                    'application_request.updated_at' => now()
-                ]);
+            \DB::transaction(function () use ($id, $user_id) {
+                // Update the application_request record
+                \DB::table('application_request')
+                    ->where('id', $id)
+                    ->where('status', 'Pending')
+                    ->update([
+                        'status' => 'Denied',
+                        'reviewed_by' => \Auth::user()->id,
+                        'updated_at' => now(),
+                    ]);
 
-            flash()->error('fail!');
+                // Update the related user's verified flag
+                if ($user_id) {
+                    \DB::table('users')->where('id', $user_id)->update(['verified' => 0]);
+                }
+            });
+
+            flash()->error('Applicant Denied!');
 
         }else
         {

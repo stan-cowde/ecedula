@@ -5,16 +5,13 @@ namespace App\Services\Paymongo;
 use Illuminate\Support\Facades\Http;
 
 class Paymongo {
-
     private $Key = '';
     private $amount = 0;
 
-    public function __construct($amount, $key = 'sk_test_pg5oqsNATMue2mZCFQvtDcMY')
+    public function __construct($amount)
     {
-            $this->Key = $key;
+            $this->Key = config('services.paymongo.key');
             $this->amount = $amount;
-
-            #abort_if(404, empty($amount), 'No Amount Declared');
     }
 
     public function redirectToPaymongoCheckout()
@@ -22,10 +19,14 @@ class Paymongo {
 
         $name = \Auth::user()->firstname . ' ' . \Auth::user()->lastname;
 
-        $finalAmount = (int) ($this->amount * 100);
+        define('EWALLET_CHARGE_PERCENTAGE', 1.5);
+
+        $amountWithCharge = $this->amount + ($this->amount * EWALLET_CHARGE_PERCENTAGE / 100);
+        $finalAmount = (int)($amountWithCharge * 100);
+
+       # dd($finalAmount);
 
         $transactionID = uuid_create();
-
 
         $ch = curl_init('https://api.paymongo.com/v1/checkout_sessions');
         curl_setopt_array($ch, [
@@ -82,6 +83,7 @@ class Paymongo {
         {
             $respo = json_decode($roseAnn);
 
+
             //id para sa uban functions na i-customize
             // $id = $respo->data->id;
 
@@ -91,9 +93,10 @@ class Paymongo {
                 //redirect siya sa checkout
                 header('Location: '. $roseAnn_redirect);
                 exit;
-            }else{
-                echo 'Error: Unable to get checkout URL: ' . $roseAnn;
-                exit;
+            }else {
+                #dd([ $respo, $this->Key ]);
+                \Log::error('Error: Unable to create checkout session: ' . $respo->errors[0]->detail);
+                return redirect()->route('user.create-payment')->withErrors('Error: Unable to create checkout session: ' . $respo->errors[0]->detail);
             }
         }
     }

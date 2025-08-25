@@ -20,18 +20,15 @@ use Livewire\Component;
     'place_of_birth' => 'required|string|max:255',
     'date_of_birth' => 'required|date',
     'profession' => 'nullable|string|max:255',
-    'gender' => 'required|in:MALE, FEMALE, OTHER',
+    'gender' => 'required|in:MALE,FEMALE,OTHER',
     'civil_status' => 'required|in:SINGLE, MARRIED, WIDOWED, DIVORCED, SEPARATED',
-    'annual_income' => 'nullable|numeric',
+    'annual_income' => 'numeric|min:5',
     'fee' => 'nullable|numeric',
     'isEmployedOrBusinessOwner' => 'boolean',
 ])]
 
 class CreatePayment extends Component
-{
-
-
-    public $full_name = '';
+{   public $full_name = '';
     public $address;
     public $tin;
     public $height;
@@ -41,6 +38,8 @@ class CreatePayment extends Component
     public $place_of_birth;
     public $date_of_birth = '';
     public $profession;
+    #[Session]
+    public $paymongo_fee;
 
 
     #[Session]
@@ -68,7 +67,6 @@ class CreatePayment extends Component
 
     public function submit()
     {
-
         $this->validate();
 
        $cedula_number = uuid_create();
@@ -111,7 +109,7 @@ class CreatePayment extends Component
         // Check if the individual is required to pay community tax based on employment/business or property ownership
         if ($this->isEmployedOrBusinessOwner) {
 
-            if(empty($this->annual_income)){
+            if (empty($this->annual_income)) {
                 $this->annual_income = 0;
             }
 
@@ -127,19 +125,37 @@ class CreatePayment extends Component
 
         // Cap the total community tax at P5,005.00
         $this->fee = min($communityTax, 5005.00);
+
+        // Calculate Paymongo service fee (2.9% + 15 pesos)
+        $this->paymongo_fee = ($this->fee * 0.015) + 15;
     }
 
     public function displayDataIfExists()
     {
-        $data =  User::join('transactions', 'transactions.user_id', '=', 'users.id')
-            ->join('personal_details', 'personal_details.user_id', '=', 'users.id')
-            ->join('identity_details', 'identity_details.user_id', '=', 'users.id')
-            ->join('family_details', 'family_details.user_id', '=', 'users.id')
-            ->join('address_details', 'address_details.user_id', '=', 'users.id')
-            ->where('users.id', \Auth::user()->id)
-            ->get()
-            ->first()
-            ->toArray();
+        $data =  User::join('personal_details', 'personal_details.user_id', '=', 'users.id')
+                    ->join('identity_details', 'identity_details.user_id', '=', 'users.id')
+                    ->join('family_details', 'family_details.user_id', '=', 'users.id')
+                    ->join('address_details', 'address_details.user_id', '=', 'users.id')
+                    ->where('users.id', \Auth::user()->id)
+                    ->select([
+                        'personal_details.last_name',
+                        'personal_details.first_name',
+                        'personal_details.middle_name',
+                        'personal_details.gender',
+                        'personal_details.citizenship',
+                        'personal_details.date_of_birth',
+                        'personal_details.civil_status',
+                        'personal_details.height',
+                        'personal_details.weight',
+                        'identity_details.tin',
+                        'identity_details.icr',
+                        'identity_details.occupation',
+                        'address_details.birth_place',
+                        'address_details.address',
+                        'address_details.municipality',
+                        'address_details.barangay',
+                    ])
+                    ->first();
 
         if(! is_null($data)) {
             $this->barangay = $data['barangay'];
@@ -150,17 +166,17 @@ class CreatePayment extends Component
             $this->weight = $data['weight'];
             $this->citizenship =  $data['citizenship'];
             $this->icr_no = $data['icr'];
-            $this->place_of_birth = $data['place_of_birth'];
+            $this->place_of_birth = $data['birth_place'];
             $this->date_of_birth =  $data['date_of_birth'];
             $this->profession = $data['occupation'];
-            $this->gender = $data['gender'];
+            $this->gender = strtoupper($data['gender']);
             $this->civil_status  = $data['civil_status'];
 
             return;
         }
 
         $this->barangay = '';
-        $this->full_name = 'John Doe';
+        $this->full_name = '';
         $this->address = '';
         $this->tin = '';
         $this->height = '';

@@ -42,15 +42,10 @@ Route::middleware(['role:user'])->group(function () {
 
 
 
-
         Route::get('/user/forms/{step}', function ($step){
 
-            $view = 'User.step_form_' . $step;
-
-            #abort_if(!view()->exists($view), 404, 'Form step not found');
-
             // Pass the $id to the view
-            return view($view, compact('step'));
+            return view('livewire.user.step-wizard', compact('step'));
 
         })->name('user.forms');
 
@@ -64,7 +59,8 @@ Route::middleware(['role:user'])->group(function () {
 
         })->name('user.paymongo.checkout');
 
-
+        // Serve private identity image securely
+        Route::get('/user/identity/{identity}/image', [\App\Http\Controllers\IdentityImageController::class, 'show'])->name('user.identity.image');
 
         Route::get('/user/payment/success', function (Illuminate\Http\Request $request) {
 

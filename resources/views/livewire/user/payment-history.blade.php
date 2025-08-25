@@ -19,8 +19,8 @@
                 <td>{{ $result->created_at }}</td>
             </tr>
         @empty
-            <tr>
-                <td colspan="4"><h2>Not found</h2></td>
+            <tr class="text-center">
+                <td colspan="4"><small>No Information Given.</small></td>
             </tr>
         @endforelse
         </tbody>

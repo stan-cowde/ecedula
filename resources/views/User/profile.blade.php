@@ -26,11 +26,11 @@
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                            <img src="{{ asset('assets/img/prof-icon.png') }}" alt="Profile" class="rounded-circle">
+                            <img src="{{ \Auth::user()->profile_image ?? asset('assets/img/prof-icon.png') }}" alt="Profile" class="rounded-circle">
                             <h2>{{ \Auth::user()->username }}</h2>
                             <h3></h3>
                             <div class="social-links mt-2">
-                                <h4>Email: {{ ucwords(\Auth::user()->email) }}</h4>
+                                <p>{{ ucwords(\Auth::user()->email) }}</p>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,6 @@
                             <div class="tab-content pt-2">
 
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title"></h5>
                                     <p class="small fst-italic"> </p>
 
                                     <h5 class="card-title">Profile Details</h5>
@@ -81,8 +80,8 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">{{ \Auth::user()->email }}</div>
+                                        <p class="col-lg-3 col-md-4 label">Email</p>
+                                        <p class="col-lg-9 col-md-8">{{ \Auth::user()->email }}</p>
                                     </div>
 
                                 </div>
@@ -188,13 +187,13 @@
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
     <!-- Vendor JS Files -->
-    <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+    <!---->
+
+
+
+
+
+
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>

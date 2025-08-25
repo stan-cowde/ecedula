@@ -20,9 +20,8 @@
     <script>
         // Auto redirect after 3 seconds
         setTimeout(function () {
-            console.log('wehh')
-            window.location.href = "{{ route('user.payment.success', ['amount' => $amount, 'transactionID' => $transactionID]) }}"; // Replace with your desired route
-        }, 5000);
+            window.location.href = "{!! route('user.payment.success', ['amount' => $amount, 'transactionID' => $transactionID]) !!}"; // Replace with your desired route
+        }, 3000);
     </script>
 
 </div>

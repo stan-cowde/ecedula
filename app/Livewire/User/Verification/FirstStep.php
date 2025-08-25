@@ -12,7 +12,7 @@ use Livewire\Component;
     'last_name' => 'required|string|max:255',
     'first_name' => 'required|string|max:255',
     'middle_name' => 'nullable|string|max:255',
-    'gender' => 'required|in:male,female,other',
+    'gender' => 'required|string',
     'citizenship' => 'required|string|max:255',
     'date_of_birth' => 'required|date',
     'civil_status' => 'required|string|max:255',
@@ -22,7 +22,7 @@ use Livewire\Component;
 
 class FirstStep extends Component
 {
-
+    public $step = 1;
     public $last_name;
     public $first_name;
     public $middle_name;
@@ -37,8 +37,10 @@ class FirstStep extends Component
     public $data = [];
 
 
-    public function mount()
+    public function mount($step)
     {
+        $this->step = (int) $step;
+
         $this->mountIfDataExist();
     }
 
@@ -62,9 +64,11 @@ class FirstStep extends Component
     }
 
 
-    public function submit()
+    public function saveFirstStep()
     {
         $validatedData = $this->validate();
+
+        #dd($validatedData);
 
         \App\Models\PersonalDetail::updateOrCreate(
             [
@@ -75,7 +79,7 @@ class FirstStep extends Component
 
         flash()->success( 'Personal details saved successfully.');
 
-        redirect()->route('user.forms', ['2']);
+        return redirect()->route('user.forms', ['step' => 2]);
     }
 
 
