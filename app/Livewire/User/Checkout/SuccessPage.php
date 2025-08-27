@@ -10,7 +10,6 @@ class SuccessPage extends Component
     public $amount;
     public $transactionID;
     public $user_id;
-
     protected $queryString = ['amount', 'transactionID', 'user_id'];
 
     public function mount()
@@ -33,10 +32,12 @@ class SuccessPage extends Component
     public function render()
     {
         $name = auth()->check()
-            ? auth()->user()->firstname . ' ' . auth()->user()->lastname
-            : 'Guest';
+                ? auth()->user()->firstname . ' ' . auth()->user()->lastname
+                : 'Guest';
 
-        return view('livewire.user.checkout.success-page', ['name' => $name]);
+        $transactionID = $this->transactionID;
+
+        return view('livewire.user.checkout.success-page', ['name' => $name, 'transactionID' => $transactionID]);
     }
 
 

@@ -21,7 +21,7 @@ class DummyApplicantAccountSeeder extends Seeder
             'email' => fake()->email,
             'username' => fake()->userName(),
             'password' => Hash::make('password'),
-            'role' => 1,
+            'role' => 2,
             'verified' => 0,
             'created_at' => now(),
             'updated_at' => now(),
@@ -71,7 +71,7 @@ class DummyApplicantAccountSeeder extends Seeder
         DB::table('address_details')->insert([
             'ad_user_id' => $userId,
             'address' => '123 Main St',
-            'nationality' => 'American',
+            'birth_place' => 'Digos City',
             'municipality' => 'Cityville',
             'barangay' => 'Barangay 1',
             'block_number' => 'Block 1',

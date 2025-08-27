@@ -40,7 +40,7 @@ class FourthStep extends Component
 
 
 
-    public function submit()
+    public function saveFourthStep()
     {
        $validated = $this->validate();
 

@@ -23,7 +23,7 @@ class RoleMiddleware
             return redirect('/login'); // Redirect to login page if not authenticated
         }
 
-        // Role check: Assume role ID 1 = user, 2 = admin
+        // Role check: Assume role ID 1 = user, 2 = superadmin
         $roles = [
             'user' => 1,
             'admin' => 2,

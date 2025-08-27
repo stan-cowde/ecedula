@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class AddressDetails extends Model
 {
     public $table = 'address_details';
-
     protected $fillable = [
         'ad_user_id',
         'address',
+        'birth_place',
         'nationality',
         'municipality',
         'barangay',

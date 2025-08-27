@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit.prevent="submit">
+    <form wire:submit.prevent="saveFourthStep">
         <div class="form first m-5">
             <div class="details personal">
                 <div class="details ID">
@@ -31,8 +31,8 @@
                         </div>
                     </div>
 
-                    <div class="buttons column-gap-3 justify-content-between">
-                        <a href="{{ route('user.forms', [3]) }}">
+                    <div class="buttons column-gap-3 justify-content-end">
+                        <a href="{{ route('user.forms', ['step' => '3']) }}">
                             <div class="backBtn">
                                 <i class="bi bi-arrow-right-circle"></i>
                                 <span class="btnText">Back</span>
