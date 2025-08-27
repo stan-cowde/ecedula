@@ -13,7 +13,7 @@ class RecentTransactionsTable extends Component
 
     public function mount()
     {
-        $this->recentTransactions = Transaction::all()->where('user_id', \Auth::user()->id)->sortByDesc('created_at');
+        $this->recentTransactions = Transaction::all()->where('tr_user_id', \Auth::user()->id)->sortByDesc('created_at');
     }
 
 

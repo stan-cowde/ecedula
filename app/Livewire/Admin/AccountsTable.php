@@ -40,13 +40,13 @@ class AccountsTable extends Component
     public function onConfirmed(array $payload): void
     {
         \DB::table('users')->where('id', $this->delete_id)->delete();
-        \DB::table('transactions')->where('user_id', $this->delete_id)->delete();
-        \DB::table('personal_details')->where('user_id', $this->delete_id)->delete();
-        \DB::table('identity_details')->where('user_id', $this->delete_id)->delete();
-        \DB::table('family_details')->where('user_id', $this->delete_id)->delete();
-        \DB::table('cedula_form')->where('user_id', $this->delete_id)->delete();
-        \DB::table('application_request')->where('user_id', $this->delete_id)->delete();
-        \DB::table('address_details')->where('user_id', $this->delete_id)->delete();
+        \DB::table('transactions')->where('tr_user_id', $this->delete_id)->delete();
+        \DB::table('personal_details')->where('pd_user_id', $this->delete_id)->delete();
+        \DB::table('identity_details')->where('id_details_user_id', $this->delete_id)->delete();
+        \DB::table('family_details')->where('fd_user_id', $this->delete_id)->delete();
+        \DB::table('cedula_form')->where('cf_user_id', $this->delete_id)->delete();
+        \DB::table('application_request')->where('ar_user_id', $this->delete_id)->delete();
+        \DB::table('address_details')->where('ad_user_id', $this->delete_id)->delete();
 
         flash()->info('User successfully deleted.');
     }

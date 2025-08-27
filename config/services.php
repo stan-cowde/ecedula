@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'paymongo' => [
+            'key' => env('PAYMONG_API_KEY')
+        ]
+
 ];

@@ -24,7 +24,7 @@ class FourthStep extends Component
     public function mountIfExists()
     {
         $data =  \App\Models\FamilyDetails::query()
-                        ->where('user_id', \Auth::user()->id)
+                        ->where('fd_user_id', \Auth::user()->id)
                         ->get()
                         ->first();
 
@@ -46,13 +46,13 @@ class FourthStep extends Component
 
         \App\Models\FamilyDetails::updateOrCreate(
             [
-                'user_id' => \Auth::user()->id,
+                'fd_user_id' => \Auth::user()->id,
             ], $validated);
 
 
         \DB::table('application_request')->updateOrInsert([
 
-            'user_id' => \Auth::user()->id,
+            'ar_user_id' => \Auth::user()->id,
 
         ], [    'status' => 'Pending',
             'reviewed_by' => null,

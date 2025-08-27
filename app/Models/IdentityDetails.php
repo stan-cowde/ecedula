@@ -11,7 +11,7 @@ class IdentityDetails extends Model
     public $table = 'identity_details';
 
     public $fillable = [
-        'user_id',
+        'id_details_user_id',
         'valid_id',
         'id_number',
         'occupation',

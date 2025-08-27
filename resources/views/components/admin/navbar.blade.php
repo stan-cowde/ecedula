@@ -104,9 +104,9 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
 
-                        <form action="config/logout.php" method="POST">
+                        <form action="{{ route('logout') }}" method="POST">
 
-                            <button type="submit" name="logout_btn" class="btn btn-primary" href="login.php" >Logout</button>
+                            <button type="submit" name="logout_btn" class="btn btn-primary" >Logout</button>
 
                         </form>
 

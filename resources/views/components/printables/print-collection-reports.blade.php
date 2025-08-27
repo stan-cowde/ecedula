@@ -25,36 +25,40 @@
     </div>
 
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col" colspan="4" style="width: 15%; text-align: center; font-size: 0.875rem;">General Fund</th>
+            <th scope="col" colspan="5" style="width: 15%; text-align: center; font-size: 0.875rem;">General Fund</th>
         </tr>
         <tr>
-            <th class="fw-bold" style="font-size: 0.875rem;">Official Receipts Ticket <br>Serial No. (From-To)</th>
+            <th class="fw-bold" style="font-size: 0.875rem;">Official Receipts Ticket</th>
             <th class="fw-bold" style="font-size: 0.875rem;">Payor</th>
             <th class="fw-bold" style="font-size: 0.875rem;">Particulars</th>
             <th class="fw-bold" style="font-size: 0.875rem;">Amount</th>
+            <th class="fw-bold" style="font-size: 0.875rem;">Date</th>
         </tr>
         </thead>
         <tbody>
         @forelse($information as $index => $data)
             <tr>
-                <td>{{ $data->serial_number }}</td>
+                <td>{{ $data->receipt_number }}</td>
                 <td>{{ $data->payor }}</td>
                 <td>{{ $data->particulars }}</td>
-                <td>₱{{ number_format($data->amount, 2) }}</td>
+                <td>₱ {{ number_format($data->amount, 2) }}</td>
+                <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F j, Y') }}</td>
             </tr>
+
             @if(($index + 1) % 17 === 0)
                 <tr class="page-break"></tr>
             @endif
+
         @empty
             <tr>
-                <td colspan="4" class="text-center"><h3>No List Available</h3></td>
+                <td colspan="5" class="text-center"><h3>No List Available</h3></td>
             </tr>
         @endforelse
         <tr>
-            <td colspan="3" class="text-end fw-bold">TOTAL</td>
+            <td colspan="4" class="text-end fw-bold">TOTAL</td>
             <td>₱{{ number_format($totalAmount, 2) }}</td>
         </tr>
         </tbody>

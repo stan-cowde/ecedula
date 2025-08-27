@@ -20,6 +20,8 @@ class PrintCollectionReports extends Component
     public function printReports()
     {
         try {
+
+
             if(! $this->startDate && ! $this->endDate) {
                 return flash()->error('Please Select a data before printing');
             }
@@ -30,8 +32,10 @@ class PrintCollectionReports extends Component
             $data = \DB::table('collection_and_deposit_reports')
                                     ->where('created_at', '>=', $this->startDate)
                                     ->where('created_at', '<=', $this->endDate)
+                                    ->orderBy('created_at', 'asc')
                                     ->get()
                                     ->toArray();
+
             $totalAmount = \DB::table('collection_and_deposit_reports')
                                     ->where('created_at', '>=', $this->startDate)
                                     ->where('created_at', '<=', $this->endDate)
@@ -43,13 +47,17 @@ class PrintCollectionReports extends Component
 
             $html = view('components.printables.print-collection-reports', ['information' => $data, 'totalAmount' => $totalAmount])->render();
 
+            /*
+            *  1) This is the old way of printing the report
+            *  2) This is error prone as well if its new to other pc
+            *  3) This is not scalable as well
+            */
 
-            $pdf = \Spatie\Browsershot\Browsershot::html($html)
-                ->format('A4')
-                ->showBackground()
-                ->setOption('marginTop', 50)
-                ->setTemporaryDirectory(storage_path('app/temp'))
-                ->pdf();
+             $pdf = \Spatie\Browsershot\Browsershot::html($html)
+                    ->format('A4')
+                    ->showBackground()
+                    ->setOption('marginTop', 50)
+                    ->pdf();
 
 
             flash()->success('Reports are being printed!');
@@ -57,7 +65,7 @@ class PrintCollectionReports extends Component
             # Return the PDF as a stream download
             return response()->streamDownload(
                 fn() => print($pdf),
-                'test-' . uuid_create() .'.pdf'
+                'collection_and_deposits-' . now() .'.pdf'
             );
 
         } catch (\Exception $exception) {

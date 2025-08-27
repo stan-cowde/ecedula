@@ -25,11 +25,11 @@ class DisplayTable extends Component
         if ($this->decision === "Approved") {
 
                 $this->rows = \DB::table("application_request")
-                                    ->join("users", "users.id", "application_request.user_id")
-                                    ->join("address_details", "address_details.user_id", "application_request.user_id")
-                                    ->join("family_details", "family_details.user_id", "application_request.user_id")
-                                    ->join("identity_details", "identity_details.user_id", "application_request.user_id")
-                                    ->join("personal_details", "personal_details.user_id", "application_request.user_id")
+                                    ->join("users", "users.id", "application_request.ar_user_id")
+                                    ->join("address_details", "address_details.ad_user_id", "application_request.ar_user_id")
+                                    ->join("family_details", "family_details.fd_user_id", "application_request.ar_user_id")
+                                    ->join("identity_details", "identity_details.id_details_user_id", "application_request.ar_user_id")
+                                    ->join("personal_details", "personal_details.pd_user_id", "application_request.ar_user_id")
                                     ->where('application_request.status', 'Approved')
                                     ->select([
                                         "application_request.*",
@@ -44,11 +44,11 @@ class DisplayTable extends Component
         } else if ($this->decision === "Denied") {
 
                 $this->rows = \DB::table("application_request")
-                                    ->join("users", "users.id", "application_request.user_id")
-                                    ->join("address_details", "address_details.user_id", "application_request.user_id")
-                                    ->join("family_details", "family_details.user_id", "application_request.user_id")
-                                    ->join("identity_details", "identity_details.user_id", "application_request.user_id")
-                                    ->join("personal_details", "personal_details.user_id", "application_request.user_id")
+                                    ->join("users", "users.id", "application_request.ar_user_id")
+                                    ->join("address_details", "address_details.ad_user_id", "application_request.ar_user_id")
+                                    ->join("family_details", "family_details.fd_user_id", "application_request.ar_user_id")
+                                    ->join("identity_details", "identity_details.id_details_user_id", "application_request.ar_user_id")
+                                    ->join("personal_details", "personal_details.pd_user_id", "application_request.ar_user_id")
                                     ->where('application_request.status', 'Denied')
                                     ->select([
                                         "application_request.*",

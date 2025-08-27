@@ -12,7 +12,7 @@ class PaymentHistory extends Component
 
     public function showPaymentHistory()
     {
-       $this->results = \DB::table('transactions')->where('user_id', \Auth::user()->id)->get();
+       $this->results = \DB::table('transactions')->where('tr_user_id', \Auth::user()->id)->get();
     }
 
     public function render()

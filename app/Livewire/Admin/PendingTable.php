@@ -26,11 +26,11 @@ class PendingTable extends Component
     {
 
         $this->rows = \DB::table("application_request")
-                            ->join("users", "users.id", "application_request.user_id")
-                            ->join("address_details", "address_details.user_id", "application_request.user_id")
-                            ->join("family_details", "family_details.user_id", "application_request.user_id")
-                            ->join("identity_details", "identity_details.user_id", "application_request.user_id")
-                            ->join("personal_details", "personal_details.user_id", "application_request.user_id")
+                            ->join("users", "users.id", "application_request.ar_user_id")
+                            ->join("address_details", "address_details.ad_user_id", "application_request.ar_user_id")
+                            ->join("family_details", "family_details.fd_user_id", "application_request.ar_user_id")
+                            ->join("identity_details", "identity_details.id_details_user_id", "application_request.ar_user_id")
+                            ->join("personal_details", "personal_details.pd_user_id", "application_request.ar_user_id")
                             ->where('application_request.status', 'Pending')
                             ->where('users.verified', 0)
                             ->select([
@@ -51,39 +51,43 @@ class PendingTable extends Component
     public function DecisionApplicantRequest($status, $id)
     {
 
-        $user_id = \DB::table('application_request')->where('id', $id)->value('user_id');
+        $user_id = \DB::table('application_request')->where('id', $id)->value('ar_user_id');
 
-        #dd($user_id, $id);
+        $name = \DB::table('users')->where('id', $user_id)->value('firstname');
 
         if ($status == 'Approved') {
 
+            \DB::table('users')
+                ->where('id', $user_id)
+                ->update(['verified' => 1]);
+
             \DB::table("application_request")
-                ->join('users', 'application_request.user_id', '=', 'users.id')
-                ->where('application_request.id', $id)
-                ->where('application_request.status', 'Pending')
+                ->where('id', $id)
+                ->where('status', 'Pending')
                 ->update([
-                    'application_request.status' => "Approved",
-                    'users.verified' => 1,
-                    'application_request.reviewed_by' => \Auth::user()->id,
-                    'application_request.updated_at' => now()
+                    'status' => "Approved",
+                    'reviewed_by' => \Auth::user()->id,
+                    'updated_at' => now()
                 ]);
 
-            flash()->success('success!');
+            flash()->success("Approved! $name has been approved!");
 
         }else if ($status == 'rejected') {
 
-            \DB::table("users")
-                ->join('application_request', 'application_request.user_id', '=', 'users.id')
-                ->where('application_request.id', $id)
-                ->where('application_request.status', 'Pending')
+            \DB::table('users')
+                ->where('id', $user_id)
+                ->update(['verified' => 0]);
+
+            \DB::table("application_request")
+                ->where('id', $id)
+                ->where('status', 'Pending')
                 ->update([
-                    'application_request.status' => "Denied",
-                    'users.verified' => 0,
-                    'application_request.reviewed_by' => \Auth::user()->id,
-                    'application_request.updated_at' => now()
+                    'status' => "Denied",
+                    'reviewed_by' => \Auth::user()->id,
+                    'updated_at' => now()
                 ]);
 
-            flash()->error('fail!');
+            flash()->error("Rejected! $name has been rejected!");
 
         }else
         {

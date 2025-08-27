@@ -24,9 +24,10 @@ class ThirdStep extends Component
 
     public function mountIfDataExist()
     {
-        $data = \DB::table('address_details')->where('user_id', \Auth::user()->id)->first();
+        $data = \DB::table('address_details')->where('ad_user_id', \Auth::user()->id)->first();
 
         if(is_null($data)) {
+
             $this->address = '';
             $this->nationality = '';
             $this->municipality = '';
@@ -35,6 +36,7 @@ class ThirdStep extends Component
             $this->street = '';
 
             return;
+
         }
 
         $this->address = $data->address;
@@ -54,7 +56,7 @@ class ThirdStep extends Component
 
         \App\Models\AddressDetails::updateOrCreate(
             [
-                'user_id' => \Auth::user()->id,
+                'ad_user_id' => \Auth::user()->id,
             ], $validatedData);
 
 

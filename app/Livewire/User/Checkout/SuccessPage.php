@@ -48,7 +48,7 @@ class SuccessPage extends Component
             Transaction::query()->updateOrInsert(
             [
                 'transaction_code' => $this->transactionID,
-                'user_id' => \Auth::user()->id,
+                'tr_user_id' => \Auth::user()->id,
             ],[
                 'amount' => intval($this->amount / 100),
                 'status' => 'APPROVED',

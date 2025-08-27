@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('user_id')->nullable();
+            $table->integer('tr_user_id')->nullable();
             $table->string('transaction_code')->nullable();
             $table->decimal('amount', 20)->nullable();
             $table->enum('status', ['PENDING', 'APPROVED'])->default('PENDING');

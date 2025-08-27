@@ -77,7 +77,7 @@ class CreatePayment extends Component
 
         \DB::table('cedula_form')->updateOrInsert([
 
-            'user_id' => \Auth::user()->id,
+            'cf_user_id' => \Auth::user()->id,
             'cedula_number' => $cedula_number,
             'annual_income' => $this->annual_income,
         ],[
@@ -131,11 +131,11 @@ class CreatePayment extends Component
 
     public function displayDataIfExists()
     {
-        $data =  User::join('transactions', 'transactions.user_id', '=', 'users.id')
-            ->join('personal_details', 'personal_details.user_id', '=', 'users.id')
-            ->join('identity_details', 'identity_details.user_id', '=', 'users.id')
-            ->join('family_details', 'family_details.user_id', '=', 'users.id')
-            ->join('address_details', 'address_details.user_id', '=', 'users.id')
+        $data =  User::join('transactions', 'transactions.tr_user_id', '=', 'users.id')
+            ->join('personal_details', 'personal_details.pd_user_id', '=', 'users.id')
+            ->join('identity_details', 'identity_details.id_details_user_id', '=', 'users.id')
+            ->join('family_details', 'family_details.fd_user_id', '=', 'users.id')
+            ->join('address_details', 'address_details.ad_user_id', '=', 'users.id')
             ->where('users.id', \Auth::user()->id)
             ->get()
             ->first()

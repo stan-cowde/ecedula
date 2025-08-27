@@ -65,7 +65,7 @@ class SecondStep extends Component
 
             \App\Models\IdentityDetails::updateOrCreate(
                 [
-                    'user_id' => \Auth::user()->id,
+                    'id_details_user_id' => \Auth::user()->id,
                 ],
                 [
                     'valid_id' => $this->imageStoragePath,
@@ -111,7 +111,7 @@ class SecondStep extends Component
 
     private function mountModelsIfExist()
     {
-        $data = IdentityDetails::where('user_id', \Auth::user()->id)->first();
+        $data = IdentityDetails::where('id_details_user_id', \Auth::user()->id)->first();
 
         if ($data) {
             $this->id_number = $data['id_number'];

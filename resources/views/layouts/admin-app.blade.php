@@ -23,6 +23,8 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    @livewireStyles
+
 </head>
 
         @hasSection('css')
@@ -45,6 +47,9 @@
      </div>
 
         <!--[scipts]--->
+
+        @livewireScripts
+        @livewireScriptConfig
 
         <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

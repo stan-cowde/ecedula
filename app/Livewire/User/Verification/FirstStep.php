@@ -44,7 +44,7 @@ class FirstStep extends Component
 
     public function mountIfDataExist()
     {
-        $this->data =  \App\Models\PersonalDetail::query()->where('user_id', auth()->id())->first();
+        $this->data =  \App\Models\PersonalDetail::query()->where('pd_user_id', auth()->id())->first();
 
         if(! $this->data) {
             return [];
@@ -68,7 +68,7 @@ class FirstStep extends Component
 
         \App\Models\PersonalDetail::updateOrCreate(
             [
-                'user_id' => \Auth::user()->id
+                'pd_user_id' => \Auth::user()->id
             ],
             $validatedData
         );

@@ -10,7 +10,7 @@ class FamilyDetails extends Model
     protected $table = 'family_details';
 
     protected $fillable = [
-        'user_id',
+        'fd_user_id',
         'father_name',
         'mother_name',
         'guardian_name',

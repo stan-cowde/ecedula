@@ -1,8 +1,8 @@
 <div x-data="{ isOpen: @entangle('isOpen') }">
     <!-- Button to open the modal -->
     <button @click="isOpen = true" class="btn btn-accent mb-3">
-        <i class="fa fa-person-booth"></i>
-        Create account
+        <i class="fa fa-money-check"></i>
+        Create a Collection Deposit
     </button>
 
     <!-- Modal -->
@@ -11,7 +11,7 @@
             <form>
                 <!-- Modal Header -->
                 <div class="flex justify-between items-center border-b pb-2 mb-4">
-                    <h5 class="text-lg font-bold">Create Account</h5>
+                    <h5 class="text-lg font-bold">Create Collection Deposit</h5>
                     <button type="button" class="btn btn-sm btn-circle" @click="isOpen = false">
                         ✕
                     </button>
@@ -19,12 +19,20 @@
 
                 <!-- Modal Body -->
                 <div class="space-y-4">
-                    <label class="input input-bordered flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                            <path fill-rule="evenodd" d="M9.493 2.852a.75.75 0 0 0-1.486-.204L7.545 6H4.198a.75.75 0 0 0 0 1.5h3.14l-.69 5H3.302a.75.75 0 0 0 0 1.5h3.14l-.435 3.148a.75.75 0 0 0 1.486.204L7.955 14h2.986l-.434 3.148a.75.75 0 0 0 1.486.204L12.456 14h3.346a.75.75 0 0 0 0-1.5h-3.14l.69-5h3.346a.75.75 0 0 0 0-1.5h-3.14l.435-3.148a.75.75 0 0 0-1.486-.204L12.045 6H9.059l.434-3.148ZM8.852 7.5l-.69 5h2.986l.69-5H8.852Z" clip-rule="evenodd" />
-                        </svg>
-                        <input wire:model="serial_number" type="text" class="grow" placeholder="Serial Number" />
-                    </label>
+                    <div class="flex gap-2">
+                        <label class="input input-bordered flex items-center gap-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                                <path fill-rule="evenodd" d="M9.493 2.852a.75.75 0 0 0-1.486-.204L7.545 6H4.198a.75.75 0 0 0 0 1.5h3.14l-.69 5H3.302a.75.75 0 0 0 0 1.5h3.14l-.435 3.148a.75.75 0 0 0 1.486.204L7.955 14h2.986l-.434 3.148a.75.75 0 0 0 1.486.204L12.456 14h3.346a.75.75 0 0 0 0-1.5h-3.14l.69-5h3.346a.75.75 0 0 0 0-1.5h-3.14l.435-3.148a.75.75 0 0 0-1.486-.204L12.045 6H9.059l.434-3.148ZM8.852 7.5l-.69 5h2.986l.69-5H8.852Z" clip-rule="evenodd" />
+                            </svg>
+                            <input wire:model="serial_number_from" type="text" class="grow text-sm" placeholder="Serial Number (From)" />
+                        </label>
+                        <label class="input input-bordered flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                                <path fill-rule="evenodd" d="M9.493 2.852a.75.75 0 0 0-1.486-.204L7.545 6H4.198a.75.75 0 0 0 0 1.5h3.14l-.69 5H3.302a.75.75 0 0 0 0 1.5h3.14l-.435 3.148a.75.75 0 0 0 1.486.204L7.955 14h2.986l-.434 3.148a.75.75 0 0 0 1.486.204L12.456 14h3.346a.75.75 0 0 0 0-1.5h-3.14l.69-5h3.346a.75.75 0 0 0 0-1.5h-3.14l.435-3.148a.75.75 0 0 0-1.486-.204L12.045 6H9.059l.434-3.148ZM8.852 7.5l-.69 5h2.986l.69-5H8.852Z" clip-rule="evenodd" />
+                            </svg>
+                            <input wire:model="serial_number_to" type="text" class="grow text-sm" placeholder="Serial Number (To)" />
+                        </label>
+                    </div>
                     @error('serial_number')
                     <span class="text-error text-sm">{{ $message }}</span>
                     @enderror
@@ -37,7 +45,7 @@
                             <path
                                 d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                         </svg>
-                        <input wire:model="payor" type="text" class="grow" placeholder="Payor" />
+                        <input wire:model="payor" type="text" class="grow" placeholder="Payor Name" />
                     </label>
                     @error('payor')
                     <span class="text-error text-sm">{{ $message }}</span>
@@ -63,7 +71,7 @@
                 <!-- Modal Footer -->
                 <div class="modal-action">
                     <button type="button" class="btn" @click="isOpen = false">Close</button>
-                    <button wire:click="save" type="button" class="btn btn-primary">Create Account</button>
+                    <button wire:click="save" type="button" class="btn btn-primary">Create Collection Deposit</button>
                 </div>
             </form>
         </div>

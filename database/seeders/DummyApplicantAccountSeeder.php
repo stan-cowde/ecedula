@@ -28,7 +28,7 @@ class DummyApplicantAccountSeeder extends Seeder
         ]);
 
         DB::table('personal_details')->insert([
-            'user_id' => $userId,
+            'pd_user_id' => $userId,
             'first_name' => 'John',
             'last_name' => 'Doe',
             'middle_name' => 'Smith',
@@ -44,7 +44,7 @@ class DummyApplicantAccountSeeder extends Seeder
 
         // Create identity details
         DB::table('identity_details')->insert([
-            'user_id' => $userId,
+            'id_details_user_id' => $userId,
             'valid_id' => 'Passport',
             'id_number' => 'A123456789',
             'occupation' => 'Software Engineer',
@@ -58,7 +58,7 @@ class DummyApplicantAccountSeeder extends Seeder
 
         // Create family details
         DB::table('family_details')->insert([
-            'user_id' => $userId,
+            'fd_user_id' => $userId,
             'father_name' => 'Richard Doe',
             'mother_name' => 'Jane Doe',
             'guardian_name' => 'N/A',
@@ -69,7 +69,7 @@ class DummyApplicantAccountSeeder extends Seeder
 
         // Create address details
         DB::table('address_details')->insert([
-            'user_id' => $userId,
+            'ad_user_id' => $userId,
             'address' => '123 Main St',
             'nationality' => 'American',
             'municipality' => 'Cityville',
@@ -82,7 +82,7 @@ class DummyApplicantAccountSeeder extends Seeder
 
         // Create application request
         DB::table('application_request')->insert([
-            'user_id' => $userId,
+            'ar_user_id' => $userId,
             'status' => 'Pending',
             'reviewed_by' => null,
             'created_at' => now(),

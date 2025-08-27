@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('application_request', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('user_id')->nullable();
+            $table->integer('ar_user_id')->nullable();
             $table->enum('status', ['Pending', 'Approved', 'Denied'])->nullable()->default('Pending');
             $table->integer('reviewed_by')->nullable();
             $table->timestamps();

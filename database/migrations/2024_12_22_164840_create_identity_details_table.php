@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('identity_details', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('user_id')->index('user_id');
+            $table->integer('id_details_user_id');
             $table->string('valid_id')->default(0);
             $table->string('id_number', 50)->default('');
             $table->string('occupation')->default(0);

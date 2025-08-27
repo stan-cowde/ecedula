@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('personal_details', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('user_id')->index('user_id');
+            $table->integer('pd_user_id');
             $table->string('first_name');
-            $table->string('last_name');
+            $table->string('last_name'); 
             $table->string('middle_name');
             $table->string('citizenship');
             $table->date('date_of_birth');

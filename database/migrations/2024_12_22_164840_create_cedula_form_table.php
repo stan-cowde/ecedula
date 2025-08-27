@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cedula_form', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('cedula_number', 50)->nullable();
-            $table->integer('user_id')->nullable();
+            $table->integer('cf_user_id')->nullable();
             $table->string('fullName')->nullable();
             $table->string('barangay');
             $table->string('address');

@@ -11,99 +11,16 @@
         </div>
 
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-3 mb-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Total e-cedula Applications (<?php //echo date("Y"); ?><!---->)</h5>
-                            <h2 class="card-text"><?php //= $NumberOfApplicants; ?><!----></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Revenue from Payments (<?php //echo date("Y"); ?><!---->)</h5>
-                            <h2 class="card-text">₱<?php //=  $totalRevenueFromPaymentsThisYear; ?><!----></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Number of Active Taxpayers (<?php //echo date("Y"); ?><!---->)</h5>
-                            <h2 class="card-text"><?php //= $totalActiveTaxPayersThisYear; ?><!----></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card text-center shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Number of Active Staff Members (<?php //echo date("Y"); ?><!---->)</h5>
-                            <h2 class="card-text"><?php //= $totalActiveStaffThisYear; ?><!----></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="row m-5">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="mb-0">Annual Payment Projection</h5>
-                            <select id="yearSelect" class="form-select w-auto" onchange="updateChart()">
-                                <?php
-                                $currentYear = date('Y');
-                                for ($year = $currentYear; $year <= $currentYear + 5; $year++) {
-                                    echo "<option value=\"$year\">$year</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <canvas id="projectionChart"></canvas>
-                    </div>
-                </div>
-            </div>
+            @livewire('admin.dashboard.data-analytics')
+
+            @livewire('admin.dashboard.annual-payment-projection')
         </div>
     </div>
 @endsection
 
 
 
-{{--<script>--}}
 
-{{--    var revenueDataByYear = <?= json_encode($revenueDataByYear); ?>;--}}
-
-{{--    const ctxx = document.getElementById('projectionChart').getContext('2d');--}}
-{{--    let projectionChart = new Chart(ctxx, {--}}
-{{--        type: 'line',--}}
-{{--        data: {--}}
-{{--            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],--}}
-{{--            datasets: [{--}}
-{{--                label: `Revenue ${<?php echo $currentYear; ?>}`,--}}
-{{--                data: revenueDataByYear[<?=  $currentYear; ?>],--}}
-{{--                borderColor: 'red',--}}
-{{--                backgroundColor: 'rgba(75, 192, 192, 0.2)',--}}
-{{--                fill: true,--}}
-{{--            }]--}}
-{{--        },--}}
-{{--        options: {--}}
-{{--            responsive: true,--}}
-{{--            scales: {--}}
-{{--                y: {--}}
-{{--                    beginAtZero: true--}}
-{{--                }--}}
-{{--            }--}}
-{{--        }--}}
-{{--    });--}}
-
-{{--    function updateChart() {--}}
-{{--        const selectedYear = document.getElementById('yearSelect').value;--}}
-
-{{--        projectionChart.data.datasets[0].data = revenueDataByYear[selectedYear];--}}
-{{--        projectionChart.data.datasets[0].label = `Revenue ${selectedYear}`;--}}
-{{--        projectionChart.update();--}}
-{{--    }--}}
-{{--</script>--}}
 
 

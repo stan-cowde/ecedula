@@ -9,7 +9,9 @@ use Livewire\Component;
     'serial_number' => 'integer|required|unique:collection_and_deposit_reports,serial_number',
     'payor' => 'string|required',
     'particulars' => 'string|required',
-    'amount' => 'numeric|required',
+    'amount' => 'numeric|required|min:0',
+    'serial_number_from' => 'integer|required',
+    'serial_number_to' => 'integer|required',
 ])]
 class CreateCollectionReportsComponent extends Component
 {
@@ -55,6 +57,8 @@ class CreateCollectionReportsComponent extends Component
             flash()->error($exception->getMessage());
         }
     }
+
+    #public function save
 
 
     public function render()

@@ -11,7 +11,7 @@ class PersonalDetail extends Model
     public $table = 'personal_details';
 
     protected $fillable = [
-        'user_id',
+        'pd_user_id',
         'first_name',
         'middle_name',
         'last_name',
